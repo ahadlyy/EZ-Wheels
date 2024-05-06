@@ -7,5 +7,7 @@ namespace Car_Rental_APIs.DTOs
         public int TotalCount { get; set; }
         public int totalResults { get; set; }
         public IEnumerable<Car> cars { get; set; }
+
+        public string userMessage { get; set; }
     }
 }
