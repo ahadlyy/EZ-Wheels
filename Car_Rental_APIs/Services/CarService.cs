@@ -1,4 +1,5 @@
-﻿using Car_Rental_APIs.Models;
+﻿using Car_Rental_APIs.DTOs;
+using Car_Rental_APIs.Models;
 using Car_Rental_APIs.UnitOfWorks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -12,9 +13,10 @@ namespace Car_Rental_APIs.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Car> getAll(int pageNumber, int pageSize)
-        {
-            var cars = _unitOfWork.CarRepo.getAllQuery(pageNumber, pageSize);
+     
+
+        public CarData getAllWithFilter(int pageNumber, int pageSize,CarFilter filter) {
+            var cars = _unitOfWork.CarRepo.GetCars(pageNumber, pageSize, filter);
             return cars;
         }
     }

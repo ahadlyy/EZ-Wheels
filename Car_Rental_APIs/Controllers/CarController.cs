@@ -1,4 +1,5 @@
-﻿using Car_Rental_APIs.Models;
+﻿using Car_Rental_APIs.DTOs;
+using Car_Rental_APIs.Models;
 using Car_Rental_APIs.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,18 @@ namespace Car_Rental_APIs.Controllers
             _carService = carService;
         }
 
-        [HttpGet]
-        public IActionResult getCars([FromQuery] int pageNumber, [FromQuery] int pageSize)
+        //[HttpGet]
+        //public IActionResult getCars([FromQuery] int pageNumber, [FromQuery] int pageSize)
+        //{
+        //    List<Car> cars = _carService.getAll(pageNumber, pageSize).ToList();
+        //    return Ok(cars);
+        //}
+
+
+        [HttpPost("{pageNumber},{pageSize}")]
+        public IActionResult getCars( int pageNumber,  int pageSize,[FromQuery] CarFilter filter)
         {
-            List<Car> cars = _carService.getAll(pageNumber, pageSize).ToList();
+            CarData cars = _carService.getAllWithFilter(pageNumber, pageSize, filter);
             return Ok(cars);
         }
     }

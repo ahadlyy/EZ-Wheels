@@ -6,21 +6,35 @@ namespace Car_Rental_APIs.UnitOfWorks
     public class UnitOfWork
     {
         RentalDbContext _db;
-        GenericRepo<Car> carRepo;
+        //GenericRepo<Car> carRepo;
         GenericRepo<CustomerRentCar> customerRentCarRepo;
+        CarRepo carRepo;
 
         public UnitOfWork(RentalDbContext db)
         {
             _db = db;
         }
 
-        public GenericRepo<Car> CarRepo
+        //public GenericRepo<Car> CarRepo
+        //{
+        //    get
+        //    {
+        //        if (carRepo == null)
+        //        {
+        //            carRepo = new GenericRepo<Car>(_db);
+        //        }
+        //        return carRepo;
+        //    }
+
+        //}
+
+        public CarRepo CarRepo
         {
             get
             {
                 if (carRepo == null)
                 {
-                    carRepo = new GenericRepo<Car>(_db);
+                    carRepo = new CarRepo(_db);
                 }
                 return carRepo;
             }

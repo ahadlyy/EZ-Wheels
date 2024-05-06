@@ -4,7 +4,7 @@ namespace Car_Rental_APIs.GenericRepo
 {
     public class GenericRepo<T> where T : class
     {
-        RentalDbContext _db;
+        protected RentalDbContext _db;
 
         public GenericRepo(RentalDbContext db)
         {
@@ -12,14 +12,14 @@ namespace Car_Rental_APIs.GenericRepo
         }
 
 
-        public IEnumerable<T> getAll()
-        {
-            return _db.Set<T>().ToList();
-        }
+        //public IEnumerable<T> getAll()
+        //{
+        //    return _db.Set<T>().ToList();
+        //}
 
-        public IEnumerable<T> getAllQuery(int pageNumber, int pageSize)
+        public IEnumerable<T> getAll(int pageNumber, int pageSize, IEnumerable<T> filteredQuery)
         {
-            var cars = getAll();
+            var cars = filteredQuery;
             var totalCount = cars.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
             if (totalPages < pageNumber)

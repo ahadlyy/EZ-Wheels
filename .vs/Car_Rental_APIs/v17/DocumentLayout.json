@@ -1,10 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\mahmoudmowiena\\Desktop\\Car Rental Web App\\",
+  "WorkspaceRootPath": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|c:\\users\\mahmoudmowiena\\desktop\\car rental web app\\car_rental_apis\\controllers\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|e:\\david\\programming\\iti\\projects\\new folder\\ez-wheels\\car_rental_apis\\genericrepo\\carrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|solutionrelative:car_rental_apis\\genericrepo\\carrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|e:\\david\\programming\\iti\\projects\\new folder\\ez-wheels\\car_rental_apis\\services\\carservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|solutionrelative:car_rental_apis\\services\\carservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|e:\\david\\programming\\iti\\projects\\new folder\\ez-wheels\\car_rental_apis\\unitofworks\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|solutionrelative:car_rental_apis\\unitofworks\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|e:\\david\\programming\\iti\\projects\\new folder\\ez-wheels\\car_rental_apis\\controllers\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|solutionrelative:car_rental_apis\\controllers\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|e:\\david\\programming\\iti\\projects\\new folder\\ez-wheels\\car_rental_apis\\models\\utilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|solutionrelative:car_rental_apis\\models\\utilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|e:\\david\\programming\\iti\\projects\\new folder\\ez-wheels\\car_rental_apis\\genericrepo\\genericrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FD2B4AC-39D3-478D-84E1-7DEC4181131F}|Car_Rental_APIs\\Car_Rental_APIs.csproj|solutionrelative:car_rental_apis\\genericrepo\\genericrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,20 +33,99 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
+          "DockedWidth": 206,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GenericRepo.cs",
+              "DocumentMoniker": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\GenericRepo\\GenericRepo.cs",
+              "RelativeDocumentMoniker": "Car_Rental_APIs\\GenericRepo\\GenericRepo.cs",
+              "ToolTip": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\GenericRepo\\GenericRepo.cs",
+              "RelativeToolTip": "Car_Rental_APIs\\GenericRepo\\GenericRepo.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAcwBUAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-06T12:40:25.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Utilities.cs",
+              "DocumentMoniker": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\Models\\Utilities.cs",
+              "RelativeDocumentMoniker": "Car_Rental_APIs\\Models\\Utilities.cs",
+              "ToolTip": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\Models\\Utilities.cs",
+              "RelativeToolTip": "Car_Rental_APIs\\Models\\Utilities.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T20:25:47.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CarController.cs",
+              "DocumentMoniker": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\Controllers\\CarController.cs",
+              "RelativeDocumentMoniker": "Car_Rental_APIs\\Controllers\\CarController.cs",
+              "ToolTip": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\Controllers\\CarController.cs",
+              "RelativeToolTip": "Car_Rental_APIs\\Controllers\\CarController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T20:10:16.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\UnitOfWorks\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Car_Rental_APIs\\UnitOfWorks\\UnitOfWork.cs",
+              "ToolTip": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\UnitOfWorks\\UnitOfWork.cs",
+              "RelativeToolTip": "Car_Rental_APIs\\UnitOfWorks\\UnitOfWork.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAQwCUAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T19:55:59.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CarService.cs",
+              "DocumentMoniker": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\Services\\CarService.cs",
+              "RelativeDocumentMoniker": "Car_Rental_APIs\\Services\\CarService.cs",
+              "ToolTip": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\Services\\CarService.cs",
+              "RelativeToolTip": "Car_Rental_APIs\\Services\\CarService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-04T16:01:10.306Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 206,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CarController.cs",
-              "DocumentMoniker": "C:\\Users\\mahmoudmowiena\\Desktop\\Car Rental Web App\\Car_Rental_APIs\\Controllers\\CarController.cs",
-              "RelativeDocumentMoniker": "Car_Rental_APIs\\Controllers\\CarController.cs",
-              "ToolTip": "C:\\Users\\mahmoudmowiena\\Desktop\\Car Rental Web App\\Car_Rental_APIs\\Controllers\\CarController.cs",
-              "RelativeToolTip": "Car_Rental_APIs\\Controllers\\CarController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAATAAAA",
+              "Title": "CarRepo.cs",
+              "DocumentMoniker": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\GenericRepo\\CarRepo.cs",
+              "RelativeDocumentMoniker": "Car_Rental_APIs\\GenericRepo\\CarRepo.cs",
+              "ToolTip": "E:\\david\\programming\\ITI\\projects\\New folder\\EZ-Wheels\\Car_Rental_APIs\\GenericRepo\\CarRepo.cs",
+              "RelativeToolTip": "Car_Rental_APIs\\GenericRepo\\CarRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T15:28:28.026Z",
+              "WhenOpened": "2024-05-06T12:39:02.141Z",
               "EditorCaption": ""
             }
           ]
