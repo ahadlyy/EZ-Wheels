@@ -102,7 +102,6 @@ namespace Car_Rental_APIs
 
 
             builder.Services.AddScoped<UnitOfWork>();
-           
 
             var app = builder.Build();
 
