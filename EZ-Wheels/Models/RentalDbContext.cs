@@ -1,4 +1,5 @@
 ﻿using Car_Rental_APIs.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -150,6 +151,43 @@ namespace Car_Rental_APIs.Models
                     DropOffLongitude = -74.0060
                 }
             );
+
+            SeedAdmin(modelBuilder);
+
+        }
+
+        private void SeedAdmin(ModelBuilder modelBuilder)
+        {
+            // Seed the superadmin role
+            var superAdminRoleId = Guid.NewGuid().ToString(); // Generate a unique role id
+            var superAdminRoleName = "Superadmin"; // Role name
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = superAdminRoleId,
+                Name = superAdminRoleName,
+                NormalizedName = superAdminRoleName.ToUpper() // Normalize the role name
+            });
+
+            // Seed the superadmin user
+            var superAdmin = new ApplicationUser
+            {
+                UserName = "moweinaEl3kak",
+                Email = "MoweinaEl3kak1122@gmail.com",
+            };
+
+            var password = "El3kak1122#";
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+            superAdmin.PasswordHash = passwordHasher.HashPassword(superAdmin, password);
+
+            modelBuilder.Entity<ApplicationUser>().HasData(superAdmin);
+
+            // Assign superadmin role to the superadmin user
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                UserId = superAdmin.Id,
+                RoleId = superAdminRoleId // Use the role id
+            });
         }
     }
 }
