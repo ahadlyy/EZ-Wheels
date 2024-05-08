@@ -1,13 +1,11 @@
 
 using Car_Rental_APIs.Models;
-using Car_Rental_APIs.Services;
 using Car_Rental_APIs.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Security.Principal;
 using System.Text;
 
 namespace Car_Rental_APIs
@@ -104,7 +102,7 @@ namespace Car_Rental_APIs
 
 
             builder.Services.AddScoped<UnitOfWork>();
-            builder.Services.AddScoped<CarService>();
+           
 
             var app = builder.Build();
 
