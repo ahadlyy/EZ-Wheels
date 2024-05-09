@@ -99,7 +99,8 @@ namespace Car_Rental_APIs.GenericRepo
                     Transmission = car.Transmission,
                     Type = car.Type,
                     Mileage = car.Mileage,
-                    NumberOfPassengers = car.NumberOfPassengers
+                    NumberOfPassengers = car.NumberOfPassengers,
+                    PhotoUrl = car.PhotoUrl
                 });
             }
             return carData;

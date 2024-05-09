@@ -12,9 +12,11 @@ namespace Car_Rental_APIs.Controllers
     public class CarController : ControllerBase
     {
         UnitOfWork _unitOfWork;
-        public CarController(UnitOfWork unitOfWork)
+        IWebHostEnvironment _hostingEnvironment;
+        public CarController(UnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet("{plateNumber}")]
@@ -36,7 +38,8 @@ namespace Car_Rental_APIs.Controllers
                 Transmission = car.Transmission,
                 Type = car.Type,
                 Mileage = car.Mileage,
-                NumberOfPassengers = car.NumberOfPassengers
+                NumberOfPassengers = car.NumberOfPassengers,
+                PhotoUrl = car.PhotoUrl
             }];
             ReturnDTO<CarDataDTO> returnDTO = new ReturnDTO<CarDataDTO>() {TotalCount = 1, totalResults = 1,  Data = carDataDTO };
             return Ok(returnDTO);
@@ -71,11 +74,81 @@ namespace Car_Rental_APIs.Controllers
             };
             return Ok(returnDTO);
         }
+        [HttpGet("colors")]
+        public IActionResult GetCarColors(int pageNumber=1, int pageSize=50)
+        {
+            var uniqueColors = _unitOfWork.CarRepo.getAll(pageNumber, pageSize)
+                .Select(car => car.Color)
+                .Distinct()
+                .ToList();
+            if(uniqueColors == null)
+            {
+                return BadRequest();
+            }
+            ReturnDTO<string> returnDTO = new ReturnDTO<string>() 
+            {
+                TotalCount = uniqueColors.Count(),
+                totalResults = uniqueColors.Count(),
+                Data = uniqueColors
+            };
+
+            return Ok(returnDTO);
+        }
+
+        [HttpGet("make")]
+        public IActionResult GetCarMakes(int pageNumber = 1, int pageSize = 50)
+        {
+            var uniqueMakes = _unitOfWork.CarRepo.getAll(pageNumber, pageSize)
+                .Select(car => car.Make)
+                .Distinct()
+                .ToList();
+            if (uniqueMakes == null)
+            {
+                return BadRequest();
+            }
+            ReturnDTO<string> returnDTO = new ReturnDTO<string>()
+            {
+                TotalCount = uniqueMakes.Count(),
+                totalResults = uniqueMakes.Count(),
+                Data = uniqueMakes
+            };
+
+            return Ok(returnDTO);
+        }
 
         [HttpPost]
-        public IActionResult AddCar(Car car)
+        public async Task<IActionResult> AddCar([FromForm] CarDataDTO car)
         {
-            _unitOfWork.CarRepo.Add(car);
+            if (car.Photo == null || car.Photo.Length == 0)
+            {
+                return BadRequest("No photo uploaded.");
+            }
+            string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + car.Photo.FileName;
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await car.Photo.CopyToAsync(stream);
+            }
+            car.PhotoUrl = "/uploads/" + uniqueFileName;
+            Car newCar = new Car() 
+            {
+                PlateNumber = car.PlateNumber,
+                ChassisNumber = car.ChassisNumber,
+                Make = car.Make,
+                Color = car.Color,
+                RentalPrice = car.RentalPrice,
+                Model = car.Model,
+                Variant = car.Variant,
+                State = car.State,
+                Transmission = car.Transmission,
+                Type = car.Type,
+                Mileage = car.Mileage,
+                NumberOfPassengers = car.NumberOfPassengers,
+                PhotoUrl = car.PhotoUrl
+            };
+            _unitOfWork.CarRepo.Add(newCar);
             try
             {
                 _unitOfWork.saveChanges();
@@ -95,13 +168,55 @@ namespace Car_Rental_APIs.Controllers
         }
 
         [HttpPut("{plateNumber}")]
-        public IActionResult EditCar(string plateNumber, Car car)
+        public async Task<IActionResult> EditCar(string plateNumber, [FromForm] CarDataDTO car)
         {
-            if(plateNumber != car.PlateNumber)
+            if (plateNumber != car.PlateNumber)
             {
                 return BadRequest();
             }
-            _unitOfWork.CarRepo.update(car);
+            Car existingCar = _unitOfWork.CarRepo.getByStringId(plateNumber);
+            if (existingCar == null)
+            {
+                return NotFound();
+            }
+
+            existingCar.ChassisNumber = car.ChassisNumber;
+            existingCar.Make = car.Make;
+            existingCar.Color = car.Color;
+            existingCar.RentalPrice = car.RentalPrice;
+            existingCar.Model = car.Model;
+            existingCar.Variant = car.Variant;
+            existingCar.State = car.State;
+            existingCar.Transmission = car.Transmission;
+            existingCar.Type = car.Type;
+            existingCar.Mileage = car.Mileage;
+            existingCar.NumberOfPassengers = car.NumberOfPassengers;
+            // Check if a new photo is provided
+            if (car.Photo != null && car.Photo.Length > 0)
+            {
+                // Save the uploaded photo to the server
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + car.Photo.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await car.Photo.CopyToAsync(stream);
+                }
+
+                // Delete the old photo if it exists
+                string oldFilePath = Path.Combine(_hostingEnvironment.WebRootPath, _unitOfWork.CarRepo.getByStringId(plateNumber).PhotoUrl.TrimStart('/'));
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+                // Update the photo URL in the DTO
+                existingCar.PhotoUrl = "/uploads/" + uniqueFileName;
+            }
+
+
+            _unitOfWork.CarRepo.update(existingCar);
+
             try
             {
                 _unitOfWork.saveChanges();
