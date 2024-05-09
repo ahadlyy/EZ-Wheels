@@ -76,6 +76,47 @@ namespace Car_Rental_APIs.Controllers
             };
             return Ok(returnDTO);
         }
+        [HttpGet("colors")]
+        public IActionResult GetCarColors(int pageNumber=1, int pageSize=50)
+        {
+            var uniqueColors = _unitOfWork.CarRepo.getAll(pageNumber, pageSize)
+                .Select(car => car.Color)
+                .Distinct()
+                .ToList();
+            if(uniqueColors == null)
+            {
+                return BadRequest();
+            }
+            ReturnDTO<string> returnDTO = new ReturnDTO<string>() 
+            {
+                TotalCount = uniqueColors.Count(),
+                totalResults = uniqueColors.Count(),
+                Data = uniqueColors
+            };
+
+            return Ok(returnDTO);
+        }
+
+        [HttpGet("make")]
+        public IActionResult GetCarMakes(int pageNumber = 1, int pageSize = 50)
+        {
+            var uniqueMakes = _unitOfWork.CarRepo.getAll(pageNumber, pageSize)
+                .Select(car => car.Make)
+                .Distinct()
+                .ToList();
+            if (uniqueMakes == null)
+            {
+                return BadRequest();
+            }
+            ReturnDTO<string> returnDTO = new ReturnDTO<string>()
+            {
+                TotalCount = uniqueMakes.Count(),
+                totalResults = uniqueMakes.Count(),
+                Data = uniqueMakes
+            };
+
+            return Ok(returnDTO);
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddCar([FromForm] CarDataDTO car)
