@@ -1,10 +1,8 @@
 ﻿using Car_Rental_APIs.DTOs;
 using Car_Rental_APIs.Models;
 using Car_Rental_APIs.UnitOfWorks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Car_Rental_APIs.Controllers
 {

@@ -29,7 +29,6 @@ namespace Car_Rental_APIs
             builder.Services.AddDbContext<RentalDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("CarRentalConnection")));
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<RentalDbContext>();
 
-
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(allowCors, builder =>
@@ -59,12 +58,8 @@ namespace Car_Rental_APIs
                     ValidateAudience = true,
                     ValidAudience = configuration["JWT:ValidAudiance"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-
-
                 };
             }
-
-
             );
 
             ///swagger configuration
@@ -100,7 +95,6 @@ namespace Car_Rental_APIs
                 });
             });
 
-
             builder.Services.AddScoped<UnitOfWork>();
 
             var app = builder.Build();
@@ -123,9 +117,8 @@ namespace Car_Rental_APIs
             app.UseCors(allowCors);  //policy block or open
 
             app.UseAuthentication();
+
             app.UseAuthorization();
-
-
 
             app.MapControllers();
 
