@@ -1,8 +1,8 @@
 ﻿using Car_Rental_APIs.DTOs;
 using Car_Rental_APIs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,11 +15,13 @@ namespace Car_Rental_APIs.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IConfiguration config)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _config = config;
         }
 
@@ -30,11 +32,25 @@ namespace Car_Rental_APIs.Controllers
                 return BadRequest(ModelState);
 
             ApplicationUser newUser = new ApplicationUser();
+            var lastUserId = await _userManager.Users.OrderByDescending(u => u.Id)
+                                                         .Select(u => u.Id)
+                                                         .FirstOrDefaultAsync();
+            if (lastUserId == null) { lastUserId = "0"; }
+
+            newUser.Id = (int.Parse(lastUserId) + 1).ToString();
             newUser.UserName = userDto.UserName;
+            newUser.NormalizedUserName = userDto.UserName.ToUpper();
             newUser.Email = userDto.Email;
+            newUser.NormalizedEmail = userDto.Email.ToUpper();
+
+            var role = await _roleManager.FindByNameAsync("Client");
+
             IdentityResult result = await _userManager.CreateAsync(newUser, userDto.Password);
             if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, role.Name);
                 return Ok("Account added successfully");
+            }
 
             var errorMessages = new List<string>();
 
