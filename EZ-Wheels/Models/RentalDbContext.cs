@@ -19,7 +19,7 @@ namespace Car_Rental_APIs.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed Cars
+            // Car Records...
             modelBuilder.Entity<Car>().HasData(
                 new Car
                 {
@@ -98,8 +98,8 @@ namespace Car_Rental_APIs.Models
                 }
             );
 
+            // Customer Rent Car Records...
             modelBuilder.Entity<CustomerRentCar>().HasData(
-                // Existing customer rent car records...
                 new CustomerRentCar
                 {
                     ReservationNumber = "RES001",
@@ -152,42 +152,82 @@ namespace Car_Rental_APIs.Models
                 }
             );
 
-            SeedAdmin(modelBuilder);
+            // Role Records...
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = "1",
+                    Name = "SuperAdmin",
+                    NormalizedName = "SUPERADMIN"
+                },
+                new IdentityRole
+                {
+                    Id = "2",
+                    Name = "Employee",
+                    NormalizedName = "EMPLOYEE"
+                },
+                new IdentityRole
+                {
+                    Id = "3",
+                    Name = "Client",
+                    NormalizedName = "CLIENT"
+                }
+            );
 
-        }
+            // User Records...
+            modelBuilder.Entity<ApplicationUser>().HasData(
+               new ApplicationUser
+               {
+                   Id = "1",
+                   Age = 28,
+                   UserName = "user1@example.com",
+                   NormalizedUserName = "USER1@EXAMPLE.COM",
+                   Email = "user1@example.com",
+                   NormalizedEmail = "USER1@EXAMPLE.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!") // Hash the password
+               },
+               new ApplicationUser
+               {
+                   Id = "2",
+                   Age = 30,
+                   UserName = "user2@example.com",
+                   NormalizedUserName = "USER2@EXAMPLE.COM",
+                   Email = "user2@example.com",
+                   NormalizedEmail = "USER2@EXAMPLE.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!") // Hash the password
+               },
+               new ApplicationUser
+               {
+                   Id = "3",
+                   Age = 32,
+                   UserName = "user3@example.com",
+                   NormalizedUserName = "USER3@EXAMPLE.COM",
+                   Email = "user3@example.com",
+                   NormalizedEmail = "USER3@EXAMPLE.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!") // Hash the password
+               }
+            );
 
-        private void SeedAdmin(ModelBuilder modelBuilder)
-        {
-            // Seed the superadmin role
-            var superAdminRoleId = Guid.NewGuid().ToString(); // Generate a unique role id
-            var superAdminRoleName = "Superadmin"; // Role name
-
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Id = superAdminRoleId,
-                Name = superAdminRoleName,
-                NormalizedName = superAdminRoleName.ToUpper() // Normalize the role name
-            });
-
-            // Seed the superadmin user
-            var superAdmin = new ApplicationUser
-            {
-                UserName = "moweinaEl3kak",
-                Email = "MoweinaEl3kak1122@gmail.com",
-            };
-
-            var password = "El3kak1122#";
-            var passwordHasher = new PasswordHasher<ApplicationUser>();
-            superAdmin.PasswordHash = passwordHasher.HashPassword(superAdmin, password);
-
-            modelBuilder.Entity<ApplicationUser>().HasData(superAdmin);
-
-            // Assign superadmin role to the superadmin user
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                UserId = superAdmin.Id,
-                RoleId = superAdminRoleId // Use the role id
-            });
+            // UserRole Records
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = "1",
+                    RoleId = "1" 
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = "2",
+                    RoleId = "2"
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = "3",
+                    RoleId = "3"
+                });
         }
     }
 }

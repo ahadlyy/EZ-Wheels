@@ -2,10 +2,8 @@
 using Car_Rental_APIs.Models;
 using Car_Rental_APIs.UnitOfWorks;
 using EZ_Wheels.Migrations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Drawing;
 
 namespace Car_Rental_APIs.Controllers
 {
