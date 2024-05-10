@@ -113,8 +113,8 @@ namespace Car_Rental_APIs
                 });
             }
             app.UseStaticFiles();
-            //settings for cors policy
-            app.UseCors(allowCors);  //policy block or open
+
+            app.UseCors(allowCors);
 
             app.UseAuthentication();
 
