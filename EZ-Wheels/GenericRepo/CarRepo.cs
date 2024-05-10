@@ -13,10 +13,9 @@ namespace Car_Rental_APIs.GenericRepo
         
         public CarRepo(RentalDbContext db) : base(db) {}
 
-        public CarDataDTO GetCars(int pageNumber, int pageSize, CarFilter filter)
+        public List<CarDataDTO> GetCars(int pageNumber, int pageSize, CarFilter filter)
         {
-            CarDataDTO carData = new CarDataDTO();
-            carData.TotalCount = _db.Cars.ToList().Count();
+            List<CarDataDTO> carData = new List<CarDataDTO>();
             var query = _db.Cars.AsQueryable();
             
             // Apply filters based on the provided criteria
@@ -45,6 +44,7 @@ namespace Car_Rental_APIs.GenericRepo
             {
                 query = query.Where(p => p.Model.Contains(filter.Model));
             }
+           
 
             if (!string.IsNullOrEmpty(filter.Variant))
             {
@@ -83,12 +83,39 @@ namespace Car_Rental_APIs.GenericRepo
                 state = (TypeEnum)res;
                 query = query.Where(p => p.Type == state);
             }
-            
-            carData.cars = getAllWithFilter(pageNumber, pageSize, query.ToList());
-            carData.totalResults = carData.cars.Count();
+
+            if (!string.IsNullOrEmpty(filter.priceOrder) && filter.priceOrder == "ascending")
+            {
+                query = query.OrderBy(a => a.RentalPrice);
+            }
+
+            if (!string.IsNullOrEmpty(filter.priceOrder) && filter.priceOrder == "descending")
+            {
+                query = query.OrderByDescending(a => a.RentalPrice);
+            }
 
 
-
+            List<Car> cars = new List<Car>();
+            cars = (List<Car>)getAllWithFilter(pageNumber, pageSize, query.ToList());
+            foreach(var car in cars)
+            {
+                carData.Add(new CarDataDTO
+                {
+                    PlateNumber = car.PlateNumber,
+                    ChassisNumber = car.ChassisNumber,
+                    Make = car.Make,
+                    Color = car.Color,
+                    RentalPrice = car.RentalPrice,
+                    Model = car.Model,
+                    Variant = car.Variant,
+                    State = car.State,
+                    Transmission = car.Transmission,
+                    Type = car.Type,
+                    Mileage = car.Mileage,
+                    NumberOfPassengers = car.NumberOfPassengers,
+                    PhotoUrl = car.PhotoUrl
+                });
+            }
             return carData;
         }
 

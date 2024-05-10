@@ -1,13 +1,11 @@
 
 using Car_Rental_APIs.Models;
-using Car_Rental_APIs.Services;
 using Car_Rental_APIs.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Security.Principal;
 using System.Text;
 
 namespace Car_Rental_APIs
@@ -30,7 +28,6 @@ namespace Car_Rental_APIs
 
             builder.Services.AddDbContext<RentalDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("CarRentalConnection")));
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<RentalDbContext>();
-
 
             builder.Services.AddCors(options =>
             {
@@ -61,12 +58,8 @@ namespace Car_Rental_APIs
                     ValidateAudience = true,
                     ValidAudience = configuration["JWT:ValidAudiance"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-
-
                 };
             }
-
-
             );
 
             ///swagger configuration
@@ -102,9 +95,7 @@ namespace Car_Rental_APIs
                 });
             });
 
-
             builder.Services.AddScoped<UnitOfWork>();
-            builder.Services.AddScoped<CarService>();
 
             var app = builder.Build();
 
@@ -122,13 +113,12 @@ namespace Car_Rental_APIs
                 });
             }
             app.UseStaticFiles();
-            //settings for cors policy
-            app.UseCors(allowCors);  //policy block or open
+
+            app.UseCors(allowCors);
 
             app.UseAuthentication();
+
             app.UseAuthorization();
-
-
 
             app.MapControllers();
 
