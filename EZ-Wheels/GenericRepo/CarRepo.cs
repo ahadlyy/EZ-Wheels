@@ -44,6 +44,7 @@ namespace Car_Rental_APIs.GenericRepo
             {
                 query = query.Where(p => p.Model.Contains(filter.Model));
             }
+           
 
             if (!string.IsNullOrEmpty(filter.Variant))
             {
@@ -82,6 +83,18 @@ namespace Car_Rental_APIs.GenericRepo
                 state = (TypeEnum)res;
                 query = query.Where(p => p.Type == state);
             }
+
+            if (!string.IsNullOrEmpty(filter.priceOrder) && filter.priceOrder == "ascending")
+            {
+                query = query.OrderBy(a => a.RentalPrice);
+            }
+
+            if (!string.IsNullOrEmpty(filter.priceOrder) && filter.priceOrder == "descending")
+            {
+                query = query.OrderByDescending(a => a.RentalPrice);
+            }
+
+
             List<Car> cars = new List<Car>();
             cars = (List<Car>)getAllWithFilter(pageNumber, pageSize, query.ToList());
             foreach(var car in cars)
