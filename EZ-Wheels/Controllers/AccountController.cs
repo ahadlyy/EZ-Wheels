@@ -49,7 +49,7 @@ namespace Car_Rental_APIs.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, role.Name);
-                return Ok("Account added successfully");
+                return Ok();
             }
 
             var errorMessages = new List<string>();
@@ -70,7 +70,7 @@ namespace Car_Rental_APIs.Controllers
                 return Unauthorized("User not found");
 
             bool isPasswordCorrect = await _userManager.CheckPasswordAsync(fetchedUser, userDto.Password);
-            if (isPasswordCorrect) 
+            if (!isPasswordCorrect) 
                 return Unauthorized("Invalid password");
 
             ///claims token
@@ -103,7 +103,8 @@ namespace Car_Rental_APIs.Controllers
                 new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(mytoken),
-                    expiration = mytoken.ValidTo
+                    expiration = mytoken.ValidTo,
+                    user = fetchedUser
                 });
         }
     }
