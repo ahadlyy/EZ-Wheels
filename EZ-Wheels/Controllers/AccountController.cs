@@ -66,12 +66,12 @@ namespace Car_Rental_APIs.Controllers
         public async Task<IActionResult> Login(LoginUserDto userDto)
         {
             ApplicationUser fetchedUser = await _userManager.FindByNameAsync(userDto.UserName);
-            if (fetchedUser == null) 
-                return Unauthorized("User not found");
+            if (fetchedUser == null)
+                return Unauthorized(new { message = "User does not exist" });
 
             bool isPasswordCorrect = await _userManager.CheckPasswordAsync(fetchedUser, userDto.Password);
-            if (!isPasswordCorrect) 
-                return Unauthorized("Invalid password");
+            if (!isPasswordCorrect)
+                return Unauthorized(new { message="Incorrect password" });
 
             ///claims token
             var claims = new List<Claim>();
