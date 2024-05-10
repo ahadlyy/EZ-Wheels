@@ -10,6 +10,7 @@ namespace Car_Rental_APIs.Models
         public string? Color { get; set; }
         public int? MaxRentalPrice { get; set; }
         public int? MinRentalPrice { get; set; }
+        public string? priceOrder {  get; set; }
         public string? Model { get; set; }
         public string? Variant { get; set; }
 
