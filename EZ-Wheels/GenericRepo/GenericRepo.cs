@@ -36,8 +36,10 @@ namespace Car_Rental_APIs.GenericRepo
             var query = filteredQuery;
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            if (totalPages < pageNumber)
-                throw new Exception("page number out of bound");
+            if (totalCount == 0 || totalPages < pageNumber)
+                return query;
+            //if (totalPages < pageNumber)
+            //    throw new Exception("page number out of bound");
             else
             {
                 query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();

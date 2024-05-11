@@ -47,7 +47,7 @@ namespace Car_Rental_APIs.Controllers
 
         [HttpGet("{pageNumber},{pageSize}")]
         public IActionResult getCars(int pageNumber, int pageSize, [FromQuery] CarFilter filter)
-        {
+       {
             List<CarDataDTO> carDataDTOs = _unitOfWork.CarRepo.GetCars(pageNumber, pageSize, filter);
             if (carDataDTOs == null) return BadRequest();
             ReturnDTO<CarDataDTO> returnDTO = new ReturnDTO<CarDataDTO>()
