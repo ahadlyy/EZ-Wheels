@@ -98,60 +98,6 @@ namespace Car_Rental_APIs.Models
                 }
             );
 
-            // Customer Rent Car Records...
-            modelBuilder.Entity<CustomerRentCar>().HasData(
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES001",
-                    StartingDate = DateTime.UtcNow.AddDays(1),
-                    EndingDate = DateTime.UtcNow.AddDays(5),
-                    PickUpLatitude = 52.5200,
-                    PickUpLongitude = 13.4050,
-                    DropOffLatitude = 52.2297,
-                    DropOffLongitude = 21.0122
-                },
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES002",
-                    StartingDate = DateTime.UtcNow.AddDays(2),
-                    EndingDate = DateTime.UtcNow.AddDays(6),
-                    PickUpLatitude = 37.7749,
-                    PickUpLongitude = -122.4194,
-                    DropOffLatitude = 34.0522,
-                    DropOffLongitude = -118.2437
-                },
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES003",
-                    StartingDate = DateTime.UtcNow.AddDays(3),
-                    EndingDate = DateTime.UtcNow.AddDays(7),
-                    PickUpLatitude = 40.7128,
-                    PickUpLongitude = -74.0060,
-                    DropOffLatitude = 33.7490,
-                    DropOffLongitude = -84.3880
-                },
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES004",
-                    StartingDate = DateTime.UtcNow.AddDays(4),
-                    EndingDate = DateTime.UtcNow.AddDays(8),
-                    PickUpLatitude = 51.5074,
-                    PickUpLongitude = -0.1278,
-                    DropOffLatitude = 48.8566,
-                    DropOffLongitude = 2.3522
-                },
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES005",
-                    StartingDate = DateTime.UtcNow.AddDays(5),
-                    EndingDate = DateTime.UtcNow.AddDays(9),
-                    PickUpLatitude = 48.8566,
-                    PickUpLongitude = 2.3522,
-                    DropOffLatitude = 40.7128,
-                    DropOffLongitude = -74.0060
-                }
-            );
-
             // Role Records...
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole
