@@ -54,6 +54,7 @@ namespace Car_Rental_APIs.Controllers
         {
             var res = await getCustomerRentCarModel(dto);
             if(res == null) return BadRequest();
+            
             _unitOfWork.CustomerRentCarRepo.Add(res);
             _unitOfWork.saveChanges();
             return Created();
@@ -91,6 +92,15 @@ namespace Car_Rental_APIs.Controllers
             dto.PlateNumber = c?.CustomerCar?.PlateNumber;
             dto.Make = c?.CustomerCar?.Make;
             dto.Model = c?.CustomerCar?.Model;
+            dto.numberofRentDays = (int) (dto.EndingDate - dto.StartingDate).TotalDays;
+            if(c.CustomerCar == null)
+            {
+                dto.totalRentPrice = 0;
+            }
+            else
+            {
+                dto.totalRentPrice = dto.numberofRentDays * c.CustomerCar.RentalPrice;
+            }
             return dto;
         }
 
@@ -104,6 +114,8 @@ namespace Car_Rental_APIs.Controllers
             rent.PickUpLongitude = dto.PickUpLongitude;
             rent.DropOffLongitude = dto.DropOffLongitude;
             rent.DropOffLatitude = dto.DropOffLatitude;
+            rent.isOnlinePaid = dto.isOnlinePaid;
+            rent.numberofRentDays = dto.numberofRentDays;
             var user =await _userManager.FindByIdAsync(dto.CustomerId);
             if(user != null)
             {
