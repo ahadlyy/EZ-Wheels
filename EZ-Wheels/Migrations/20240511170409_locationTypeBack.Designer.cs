@@ -4,6 +4,7 @@ using Car_Rental_APIs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EZ_Wheels.Migrations
 {
     [DbContext(typeof(RentalDbContext))]
-    partial class RentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240511170409_locationTypeBack")]
+    partial class locationTypeBack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,15 +101,15 @@ namespace EZ_Wheels.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             Age = 28,
-                            ConcurrencyStamp = "7196efb7-9773-4994-a363-57b5d11ed823",
+                            ConcurrencyStamp = "5a5a9383-7d9e-425c-ab58-a429b7f2db1d",
                             Email = "user1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAIGs6H/4ROePqxVDHQEdJDJhYC8CaoTc9US4/JjMPhJTeZgkSxp3N94/vWC9naqiw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPhglFe81LHO43BJQqgbwnPhjnOAho/m2hIiDXvasO1mURrWtOXD63J1FYTGc0U2Ug==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a9cf027a-3d28-4aea-b356-630b40fb6ff9",
+                            SecurityStamp = "345c27f1-278f-4f2a-82fe-75a832ae070b",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -115,15 +118,15 @@ namespace EZ_Wheels.Migrations
                             Id = "2",
                             AccessFailedCount = 0,
                             Age = 30,
-                            ConcurrencyStamp = "b9a71c40-9f3e-4b3a-8be5-c055875836d9",
+                            ConcurrencyStamp = "c1f70e9f-80ba-4585-bed1-83b050daf5f4",
                             Email = "user2@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDc+irLTJ0Qlxh6KbTsoOQEE7Ct+R4f0d6JXi5JzIJN26zMYfdHeby/aVq4PnylB0A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDEA1zJ1rm9JrwG/kLgVGric+QqGrADjV8IK83nylQEZpX1bhpZ7+IHgsJ6RT6v50Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8794616b-df0d-49f8-8796-03ef7aae404b",
+                            SecurityStamp = "39af2ebd-a44a-4a79-8fd9-19b2839dd63a",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -132,15 +135,15 @@ namespace EZ_Wheels.Migrations
                             Id = "3",
                             AccessFailedCount = 0,
                             Age = 32,
-                            ConcurrencyStamp = "869f8734-c39d-463a-868f-7207c4e108ca",
+                            ConcurrencyStamp = "595f1e44-5f79-43f8-b9ae-d05fe5db3a77",
                             Email = "user3@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@EXAMPLE.COM",
                             NormalizedUserName = "USER3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMvzM5LsodtbDFYsMNjsv/qj2KXuXSfM8ULj+18epxSP579SofBLpmuM7zEg3E/Pqw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKshzuVTr7HzrlVqQGEwk20AWlKwShRyun4zhuUamLbXrR4DMTFxuz6sl5ukeJUNxg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5f2060e0-d123-477b-979c-2d0e91f179d9",
+                            SecurityStamp = "00f03e79-e052-47a6-a4fd-03101b26dd66",
                             TwoFactorEnabled = false,
                             UserName = "user3@example.com"
                         });
@@ -302,18 +305,6 @@ namespace EZ_Wheels.Migrations
 
                     b.Property<DateTime>("StartingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("isInProgress")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isOnlinePaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("numberofRentDays")
-                        .HasColumnType("int");
-
-                    b.Property<float>("totalRentPrice")
-                        .HasColumnType("real");
 
                     b.HasKey("ReservationNumber");
 
