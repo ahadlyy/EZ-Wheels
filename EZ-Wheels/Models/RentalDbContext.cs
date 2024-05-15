@@ -19,7 +19,7 @@ namespace Car_Rental_APIs.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed Cars
+            // Car Records...
             modelBuilder.Entity<Car>().HasData(
                 new Car
                 {
@@ -98,96 +98,85 @@ namespace Car_Rental_APIs.Models
                 }
             );
 
-            modelBuilder.Entity<CustomerRentCar>().HasData(
-                // Existing customer rent car records...
-                new CustomerRentCar
+            // Role Records...
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
                 {
-                    ReservationNumber = "RES001",
-                    StartingDate = DateTime.UtcNow.AddDays(1),
-                    EndingDate = DateTime.UtcNow.AddDays(5),
-                    PickUpLatitude = 52.5200,
-                    PickUpLongitude = 13.4050,
-                    DropOffLatitude = 52.2297,
-                    DropOffLongitude = 21.0122
+                    Id = "1",
+                    Name = "SuperAdmin",
+                    NormalizedName = "SUPERADMIN"
                 },
-                new CustomerRentCar
+                new IdentityRole
                 {
-                    ReservationNumber = "RES002",
-                    StartingDate = DateTime.UtcNow.AddDays(2),
-                    EndingDate = DateTime.UtcNow.AddDays(6),
-                    PickUpLatitude = 37.7749,
-                    PickUpLongitude = -122.4194,
-                    DropOffLatitude = 34.0522,
-                    DropOffLongitude = -118.2437
+                    Id = "2",
+                    Name = "Employee",
+                    NormalizedName = "EMPLOYEE"
                 },
-                new CustomerRentCar
+                new IdentityRole
                 {
-                    ReservationNumber = "RES003",
-                    StartingDate = DateTime.UtcNow.AddDays(3),
-                    EndingDate = DateTime.UtcNow.AddDays(7),
-                    PickUpLatitude = 40.7128,
-                    PickUpLongitude = -74.0060,
-                    DropOffLatitude = 33.7490,
-                    DropOffLongitude = -84.3880
-                },
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES004",
-                    StartingDate = DateTime.UtcNow.AddDays(4),
-                    EndingDate = DateTime.UtcNow.AddDays(8),
-                    PickUpLatitude = 51.5074,
-                    PickUpLongitude = -0.1278,
-                    DropOffLatitude = 48.8566,
-                    DropOffLongitude = 2.3522
-                },
-                new CustomerRentCar
-                {
-                    ReservationNumber = "RES005",
-                    StartingDate = DateTime.UtcNow.AddDays(5),
-                    EndingDate = DateTime.UtcNow.AddDays(9),
-                    PickUpLatitude = 48.8566,
-                    PickUpLongitude = 2.3522,
-                    DropOffLatitude = 40.7128,
-                    DropOffLongitude = -74.0060
+                    Id = "3",
+                    Name = "Client",
+                    NormalizedName = "CLIENT"
                 }
             );
 
-            SeedAdmin(modelBuilder);
+            // User Records...
+            modelBuilder.Entity<ApplicationUser>().HasData(
+               new ApplicationUser
+               {
+                   Id = "1",
+                   Age = 28,
+                   PhoneNumber ="01100200300",
+                   UserName = "user1@example.com",
+                   NormalizedUserName = "USER1@EXAMPLE.COM",
+                   Email = "user1@example.com",
+                   NormalizedEmail = "USER1@EXAMPLE.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!") // Hash the password
+               },
+               new ApplicationUser
+               {
+                   Id = "2",
+                   Age = 30,
+                   PhoneNumber = "01020304050",
+                   UserName = "user2@example.com",
+                   NormalizedUserName = "USER2@EXAMPLE.COM",
+                   Email = "user2@example.com",
+                   NormalizedEmail = "USER2@EXAMPLE.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!") // Hash the password
+               },
+               new ApplicationUser
+               {
+                   Id = "3",
+                   Age = 32,
+                   PhoneNumber = "01234567890",
+                   UserName = "user3@example.com",
+                   NormalizedUserName = "USER3@EXAMPLE.COM",
+                   Email = "user3@example.com",
+                   NormalizedEmail = "USER3@EXAMPLE.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!") // Hash the password
+               }
+            );
 
-        }
-
-        private void SeedAdmin(ModelBuilder modelBuilder)
-        {
-            // Seed the superadmin role
-            var superAdminRoleId = Guid.NewGuid().ToString(); // Generate a unique role id
-            var superAdminRoleName = "Superadmin"; // Role name
-
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Id = superAdminRoleId,
-                Name = superAdminRoleName,
-                NormalizedName = superAdminRoleName.ToUpper() // Normalize the role name
-            });
-
-            // Seed the superadmin user
-            var superAdmin = new ApplicationUser
-            {
-                UserName = "moweinaEl3kak",
-                Email = "MoweinaEl3kak1122@gmail.com",
-            };
-
-            var password = "El3kak1122#";
-            var passwordHasher = new PasswordHasher<ApplicationUser>();
-            superAdmin.PasswordHash = passwordHasher.HashPassword(superAdmin, password);
-
-            modelBuilder.Entity<ApplicationUser>().HasData(superAdmin);
-
-            // Assign superadmin role to the superadmin user
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                UserId = superAdmin.Id,
-                RoleId = superAdminRoleId // Use the role id
-            });
+            // UserRole Records
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = "1",
+                    RoleId = "1" 
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = "2",
+                    RoleId = "2"
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = "3",
+                    RoleId = "3"
+                });
         }
     }
 }

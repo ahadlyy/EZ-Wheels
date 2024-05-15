@@ -4,6 +4,7 @@ using Car_Rental_APIs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EZ_Wheels.Migrations
 {
     [DbContext(typeof(RentalDbContext))]
-    partial class RentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240508162757_addedPhoto")]
+    partial class addedPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,59 +94,6 @@ namespace EZ_Wheels.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            Age = 28,
-                            ConcurrencyStamp = "7196efb7-9773-4994-a363-57b5d11ed823",
-                            Email = "user1@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER1@EXAMPLE.COM",
-                            NormalizedUserName = "USER1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAIGs6H/4ROePqxVDHQEdJDJhYC8CaoTc9US4/JjMPhJTeZgkSxp3N94/vWC9naqiw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a9cf027a-3d28-4aea-b356-630b40fb6ff9",
-                            TwoFactorEnabled = false,
-                            UserName = "user1@example.com"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AccessFailedCount = 0,
-                            Age = 30,
-                            ConcurrencyStamp = "b9a71c40-9f3e-4b3a-8be5-c055875836d9",
-                            Email = "user2@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER2@EXAMPLE.COM",
-                            NormalizedUserName = "USER2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDc+irLTJ0Qlxh6KbTsoOQEE7Ct+R4f0d6JXi5JzIJN26zMYfdHeby/aVq4PnylB0A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "8794616b-df0d-49f8-8796-03ef7aae404b",
-                            TwoFactorEnabled = false,
-                            UserName = "user2@example.com"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            AccessFailedCount = 0,
-                            Age = 32,
-                            ConcurrencyStamp = "869f8734-c39d-463a-868f-7207c4e108ca",
-                            Email = "user3@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER3@EXAMPLE.COM",
-                            NormalizedUserName = "USER3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMvzM5LsodtbDFYsMNjsv/qj2KXuXSfM8ULj+18epxSP579SofBLpmuM7zEg3E/Pqw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "5f2060e0-d123-477b-979c-2d0e91f179d9",
-                            TwoFactorEnabled = false,
-                            UserName = "user3@example.com"
-                        });
                 });
 
             modelBuilder.Entity("Car_Rental_APIs.Models.Car", b =>
@@ -303,18 +253,6 @@ namespace EZ_Wheels.Migrations
                     b.Property<DateTime>("StartingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("isInProgress")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isOnlinePaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("numberofRentDays")
-                        .HasColumnType("int");
-
-                    b.Property<float>("totalRentPrice")
-                        .HasColumnType("real");
-
                     b.HasKey("ReservationNumber");
 
                     b.HasIndex("CustomerCarPlateNumber");
@@ -322,6 +260,58 @@ namespace EZ_Wheels.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("customerRentCars");
+
+                    b.HasData(
+                        new
+                        {
+                            ReservationNumber = "RES001",
+                            DropOffLatitude = 52.229700000000001,
+                            DropOffLongitude = 21.0122,
+                            EndingDate = new DateTime(2024, 5, 13, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(372),
+                            PickUpLatitude = 52.520000000000003,
+                            PickUpLongitude = 13.404999999999999,
+                            StartingDate = new DateTime(2024, 5, 9, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(366)
+                        },
+                        new
+                        {
+                            ReservationNumber = "RES002",
+                            DropOffLatitude = 34.052199999999999,
+                            DropOffLongitude = -118.2437,
+                            EndingDate = new DateTime(2024, 5, 14, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(377),
+                            PickUpLatitude = 37.774900000000002,
+                            PickUpLongitude = -122.4194,
+                            StartingDate = new DateTime(2024, 5, 10, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(376)
+                        },
+                        new
+                        {
+                            ReservationNumber = "RES003",
+                            DropOffLatitude = 33.749000000000002,
+                            DropOffLongitude = -84.388000000000005,
+                            EndingDate = new DateTime(2024, 5, 15, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(380),
+                            PickUpLatitude = 40.712800000000001,
+                            PickUpLongitude = -74.006,
+                            StartingDate = new DateTime(2024, 5, 11, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(379)
+                        },
+                        new
+                        {
+                            ReservationNumber = "RES004",
+                            DropOffLatitude = 48.8566,
+                            DropOffLongitude = 2.3521999999999998,
+                            EndingDate = new DateTime(2024, 5, 16, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(382),
+                            PickUpLatitude = 51.507399999999997,
+                            PickUpLongitude = -0.1278,
+                            StartingDate = new DateTime(2024, 5, 12, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(382)
+                        },
+                        new
+                        {
+                            ReservationNumber = "RES005",
+                            DropOffLatitude = 40.712800000000001,
+                            DropOffLongitude = -74.006,
+                            EndingDate = new DateTime(2024, 5, 17, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(385),
+                            PickUpLatitude = 48.8566,
+                            PickUpLongitude = 2.3521999999999998,
+                            StartingDate = new DateTime(2024, 5, 13, 16, 27, 55, 693, DateTimeKind.Utc).AddTicks(384)
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -349,26 +339,6 @@ namespace EZ_Wheels.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SUPERADMIN"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Employee",
-                            NormalizedName = "EMPLOYEE"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "Client",
-                            NormalizedName = "CLIENT"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -456,23 +426,6 @@ namespace EZ_Wheels.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "2",
-                            RoleId = "2"
-                        },
-                        new
-                        {
-                            UserId = "3",
-                            RoleId = "3"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

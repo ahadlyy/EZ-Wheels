@@ -18,6 +18,7 @@ namespace Car_Rental_APIs.DTOs
         public TypeEnum Type { get; set; } = TypeEnum.Sedan;
         public int Mileage { get; set; }
         public int NumberOfPassengers { get; set; }
-
+        public IFormFile Photo { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }
