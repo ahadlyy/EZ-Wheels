@@ -42,6 +42,8 @@ namespace Car_Rental_APIs.Controllers
             newUser.NormalizedUserName = userDto.UserName.ToUpper();
             newUser.Email = userDto.Email;
             newUser.NormalizedEmail = userDto.Email.ToUpper();
+            newUser.Age = userDto.Age;
+            newUser.PhoneNumber = userDto.PhoneNumber;
 
             var role = await _roleManager.FindByNameAsync("Client");
 
