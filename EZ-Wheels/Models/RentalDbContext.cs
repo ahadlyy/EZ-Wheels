@@ -180,6 +180,7 @@ namespace Car_Rental_APIs.Models
                {
                    Id = "1",
                    Age = 28,
+                   PhoneNumber ="01100200300",
                    UserName = "user1@example.com",
                    NormalizedUserName = "USER1@EXAMPLE.COM",
                    Email = "user1@example.com",
@@ -191,6 +192,7 @@ namespace Car_Rental_APIs.Models
                {
                    Id = "2",
                    Age = 30,
+                   PhoneNumber = "01020304050",
                    UserName = "user2@example.com",
                    NormalizedUserName = "USER2@EXAMPLE.COM",
                    Email = "user2@example.com",
@@ -202,6 +204,7 @@ namespace Car_Rental_APIs.Models
                {
                    Id = "3",
                    Age = 32,
+                   PhoneNumber = "01234567890",
                    UserName = "user3@example.com",
                    NormalizedUserName = "USER3@EXAMPLE.COM",
                    Email = "user3@example.com",

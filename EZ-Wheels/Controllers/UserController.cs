@@ -3,7 +3,7 @@ using Car_Rental_APIs.Models;
 using EZ_Wheels.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;//
 
 namespace EZ_Wheels.Controllers
 {
@@ -50,12 +50,7 @@ namespace EZ_Wheels.Controllers
                 return NotFound();
             else
             {
-                UserDTO fetchedUser = new UserDTO
-                {
-                    Id = fetchedUserRaw.Id,
-                    UserName = fetchedUserRaw.UserName,
-                    Email = fetchedUserRaw.Email
-                };
+                UserDTO fetchedUser = prepareUserDTO(fetchedUserRaw);
                 return Ok(fetchedUser);
             }
         }
@@ -77,6 +72,8 @@ namespace EZ_Wheels.Controllers
             newUser.NormalizedUserName = userToAdd.UserName.ToUpper();
             newUser.Email = userToAdd.Email;
             newUser.NormalizedEmail = userToAdd.Email.ToUpper();
+            newUser.Age = userToAdd.Age;
+            newUser.PhoneNumber = userToAdd.PhoneNumber;
 
             var role = await _roleManager.FindByNameAsync("Employee");
 
@@ -111,10 +108,17 @@ namespace EZ_Wheels.Controllers
             fetchedUser.UserName = userToUpdate.UserName;
             fetchedUser.NormalizedUserName = userToUpdate.UserName.ToUpper();
             fetchedUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(fetchedUser, userToUpdate.Password);
+            fetchedUser.Age = userToUpdate.Age;
+            fetchedUser.PhoneNumber = userToUpdate.PhoneNumber;
 
-            var updatedUser = await _userManager.UpdateAsync(fetchedUser);
-
-            return Ok(updatedUser);
+            var updateResult = await _userManager.UpdateAsync(fetchedUser);
+            if (updateResult.Succeeded)
+            {
+                UserDTO updatedUser = prepareUserDTO(fetchedUser);
+                return Ok(updatedUser);
+            }
+            else
+                return BadRequest(updateResult);
         }
 
         [HttpDelete("{id}")]
@@ -127,6 +131,19 @@ namespace EZ_Wheels.Controllers
                 return NotFound();
             await _userManager.DeleteAsync(userToDelete);
             return Ok();
+        }
+
+        private UserDTO prepareUserDTO(ApplicationUser user)
+        {
+            UserDTO returnedUser = new UserDTO
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Age = user.Age,
+                PhoneNumber = user.PhoneNumber
+            };
+            return returnedUser;
         }
     }
 }

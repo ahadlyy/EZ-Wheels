@@ -54,6 +54,7 @@ namespace Car_Rental_APIs.Controllers
         {
             var res = await getCustomerRentCarModel(dto);
             if(res == null) return BadRequest();
+            res.ReservationNumber = DateTime.Now.ToString("HHmmssddMMyyyy") + res.Customer.Id;
             _unitOfWork.CustomerRentCarRepo.Add(res);
             _unitOfWork.saveChanges();
             return Created();
