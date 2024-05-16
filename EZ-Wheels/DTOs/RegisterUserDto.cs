@@ -22,5 +22,12 @@ namespace Car_Rental_APIs.DTOs
         [Required]
         //[EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
+
+        [Required]
+        [Range(18, 65, ErrorMessage = "The age must be between 18 and 65 years old.")]
+        public int Age { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
     }
 }
