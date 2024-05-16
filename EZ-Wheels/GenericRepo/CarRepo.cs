@@ -108,9 +108,9 @@ namespace Car_Rental_APIs.GenericRepo
                     RentalPrice = car.RentalPrice,
                     Model = car.Model,
                     Variant = car.Variant,
-                    State = car.State,
-                    Transmission = car.Transmission,
-                    Type = car.Type,
+                    State = car.State.ToString(),
+                    Transmission = car.Transmission.ToString(),
+                    Type = car.Type.ToString(),
                     Mileage = car.Mileage,
                     NumberOfPassengers = car.NumberOfPassengers,
                     PhotoUrl = car.PhotoUrl
