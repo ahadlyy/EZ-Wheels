@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Car_Rental_APIs.GenericRepo;
+using Car_Rental_APIs.Models;
 
 namespace Car_Rental_APIs.Services
 {
@@ -18,7 +19,7 @@ namespace Car_Rental_APIs.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Payment> CreatePaymentAsync(decimal amount, string currency)
+        public async Task<Payment> CreatePaymentAsync(float amount, string currency)
         {
             var payment = new Payment
             {
@@ -44,9 +45,18 @@ namespace Car_Rental_APIs.Services
             };
 
             var createdPayment = await Task.Run(() => payment.Create(_apiContext));
-            // If you need to save any information to the database, do so here
-            // await _unitOfWork.SomeRepo.InsertAsync(someEntity);
+
+            var newPayment = new purchase
+            {
+                PaymentId = createdPayment.id,
+                Amount = (float)amount,
+                Currency = currency,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            _unitOfWork.PaymentRepo.Add(newPayment);
             await _unitOfWork.SaveChangesAsync();
+
 
             return createdPayment;
         }
@@ -54,14 +64,21 @@ namespace Car_Rental_APIs.Services
         public async Task<Payment> ExecutePaymentAsync(string paymentId, string payerId)
         {
             var paymentExecution = new PaymentExecution { payer_id = payerId };
-            var payment = new Payment { id = paymentId };
+            var payment = new PayPal.Api.Payment { id = paymentId };
             var executedPayment = await Task.Run(() => payment.Execute(_apiContext, paymentExecution));
-            // If you need to update any information in the database, do so here
-            // await _unitOfWork.SomeRepo.UpdateAsync(someEntity);
-            await _unitOfWork.SaveChangesAsync();
+
+            var existingPayment = _unitOfWork.PaymentRepo.getByStringId(paymentId);
+            if (existingPayment != null)
+            {
+                existingPayment.PayerId = payerId;
+                existingPayment.ExecutedDate = DateTime.UtcNow;
+                _unitOfWork.PaymentRepo.update(existingPayment);
+                await _unitOfWork.SaveChangesAsync();
+            }
 
             return executedPayment;
         }
+
     }
 }
 
