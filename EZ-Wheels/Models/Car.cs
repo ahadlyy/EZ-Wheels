@@ -23,7 +23,9 @@ namespace Car_Rental_APIs.Models
         public StateEnum State { get; set; } = StateEnum.Available;
         public TransmissionEnum Transmission { get; set; } = TransmissionEnum.Automatic;
         public TypeEnum Type { get; set; } = TypeEnum.Sedan;
+        [Required]
         public int Mileage { get; set; }
+        [Required]
         public int NumberOfPassengers { get; set; }
         public string PhotoUrl { get; set; }
         public virtual ICollection<CustomerRentCar> CustomerCarRentals { get; set; } = new HashSet<CustomerRentCar>();
