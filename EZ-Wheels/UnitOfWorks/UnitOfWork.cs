@@ -59,5 +59,10 @@ namespace Car_Rental_APIs.UnitOfWorks
             _db.SaveChanges();
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _db.SaveChangesAsync();
+        }
+
     }
 }

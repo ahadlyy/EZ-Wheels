@@ -1,11 +1,14 @@
 
+using Car_Rental_APIs.GenericRepo;
 using Car_Rental_APIs.Models;
+using Car_Rental_APIs.Services;
 using Car_Rental_APIs.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PayPal;
 using System.Text;
 
 namespace Car_Rental_APIs
@@ -96,6 +99,29 @@ namespace Car_Rental_APIs
             });
 
             builder.Services.AddScoped<UnitOfWork>();
+
+            // Configure PayPal APIContext
+            //var clientId = configuration["PayPal:ClientId"];
+            //var clientSecret = configuration["PayPal:ClientSecret"];
+            //var config = new Dictionary<string, string>
+            //{
+            //    { "mode", configuration["PayPal:Mode"] },
+            //    { "clientId", configuration["PayPal:ClientId"] },
+            //    { "clientSecret", configuration["PayPal:ClientSecret"] },
+            //    { "connectionTimeout", configuration["PayPal:ConnectionTimeout"] },
+            //    { "requestRetries", configuration["PayPal:RequestRetries"] }
+            //};
+
+            //var accessToken = new OAuthTokenCredential(clientId, clientSecret, config).GetAccessToken();
+            //var apiContext = new APIContext(accessToken)
+            //{
+            //    Config = config
+            //};
+
+            //// Register PayPal APIContext and PayPalService
+            //builder.Services.AddSingleton(apiContext);
+            //builder.Services.AddScoped<PaypalRepo, PaypalService>();
+
 
             var app = builder.Build();
 
