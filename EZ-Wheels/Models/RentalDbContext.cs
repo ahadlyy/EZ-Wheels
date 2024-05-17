@@ -12,6 +12,7 @@ namespace Car_Rental_APIs.Models
     {
         public DbSet<Car> Cars { get; set; }
         public DbSet<CustomerRentCar> customerRentCars { get; set; }
+        public DbSet<purchase> purchases { get; set; }
 
         public RentalDbContext() { }
         public RentalDbContext(DbContextOptions options) : base(options) { }
