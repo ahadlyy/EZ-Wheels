@@ -30,12 +30,7 @@ namespace EZ_Wheels.Controllers
             List<UserDTO> fetchedUsers = [];
             foreach (var user in fetchedUsersRaw)
             {
-                fetchedUsers.Add(new UserDTO
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email
-                });
+                fetchedUsers.Add(prepareUserDTO(user));
             }
             return Ok(fetchedUsers);
         }

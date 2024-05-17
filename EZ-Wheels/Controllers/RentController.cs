@@ -21,7 +21,6 @@ namespace Car_Rental_APIs.Controllers
         [HttpGet("{pageNumber},{pageSize}")]
         public IActionResult getAll(int pageNumber=1, int pageSize=100)
         {
-
             var data = _unitOfWork.CustomerRentCarRepo.getAll(pageNumber, pageSize).ToList();
             List<CustomerRentCarDTO> customerRentCarDTOList = new List<CustomerRentCarDTO>();
             foreach (var item in data)
@@ -79,9 +78,9 @@ namespace Car_Rental_APIs.Controllers
             return Ok();
         }
 
-
         private CustomerRentCarDTO getCarRentDTO(CustomerRentCar c) {
             CustomerRentCarDTO dto = new CustomerRentCarDTO();
+            dto.CustomerId = c.Customer.Id;
             dto.ReservationNumber = c.ReservationNumber;
             dto.StartingDate = c.StartingDate;
             dto.EndingDate = c.EndingDate;
@@ -94,14 +93,13 @@ namespace Car_Rental_APIs.Controllers
             dto.Make = c?.CustomerCar?.Make;
             dto.Model = c?.CustomerCar?.Model;
             dto.numberofRentDays = (int) (dto.EndingDate - dto.StartingDate).TotalDays;
+
             if(c.CustomerCar == null)
-            {
                 dto.totalRentPrice = 0;
-            }
+            
             else
-            {
                 dto.totalRentPrice = dto.numberofRentDays * c.CustomerCar.RentalPrice;
-            }
+
             return dto;
         }
 
@@ -116,7 +114,9 @@ namespace Car_Rental_APIs.Controllers
             rent.DropOffLongitude = dto.DropOffLongitude;
             rent.DropOffLatitude = dto.DropOffLatitude;
             rent.isOnlinePaid = dto.isOnlinePaid;
-            rent.numberofRentDays = dto.numberofRentDays;
+            rent.numberofRentDays = (int)(dto.EndingDate - dto.StartingDate).TotalDays;
+            var pricePerDay = _unitOfWork.CarRepo.getByStringId(dto.PlateNumber).RentalPrice;
+            rent.totalRentPrice = rent.numberofRentDays * pricePerDay;
             var user =await _userManager.FindByIdAsync(dto.CustomerId);
             if(user != null)
             {
@@ -129,6 +129,5 @@ namespace Car_Rental_APIs.Controllers
             }
             return rent;
         }
-
     }
 }
