@@ -4,6 +4,7 @@ using Car_Rental_APIs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EZ_Wheels.Migrations
 {
     [DbContext(typeof(RentalDbContext))]
-    partial class RentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517123125_seeding all cars")]
+    partial class seedingallcars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -98,16 +101,16 @@ namespace EZ_Wheels.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             Age = 28,
-                            ConcurrencyStamp = "5d9f8569-91af-4f4a-9d0b-ecd460907892",
+                            ConcurrencyStamp = "dff04722-6e44-40fc-8389-a2eb672365b1",
                             Email = "user1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC+mmTb4MYXImNF2Y5CdcIJbqJZszjLt0GZGOjSK2mkCZ3QBIPa5eaI6VpnoIL2kbg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB7+O5VTwCm6Tf+RouD4bG7DPB8IMf/oqKk/XfptDTeFsRrfW7TwdLtHHyLKr5PMfg==",
                             PhoneNumber = "01100200300",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e308a270-3995-425a-97e7-2c931f97745b",
+                            SecurityStamp = "1584503b-8603-4094-b97e-473fb41c2897",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -116,16 +119,16 @@ namespace EZ_Wheels.Migrations
                             Id = "2",
                             AccessFailedCount = 0,
                             Age = 30,
-                            ConcurrencyStamp = "33332cdc-fed2-4f93-bd00-2840377d2539",
+                            ConcurrencyStamp = "338c52dd-50e5-451f-bb89-1b7853900929",
                             Email = "user2@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECyQ43AwiYOxdDL30y50sW70fupHqKfwDfMCqLOIV4oSNkqxCZFTy2nMyvYwUM3w0A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPu9JK5HOkaNzSFAqyOqCroD+94di1I4A8XXkuhf0T+9Fp03Lyzcn1RCOVZ9bPc21w==",
                             PhoneNumber = "01020304050",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e13cebf8-c6e0-4e48-a6bc-f43e4f8b9356",
+                            SecurityStamp = "4cc69e73-3591-406f-a504-8b639737dcff",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -134,16 +137,16 @@ namespace EZ_Wheels.Migrations
                             Id = "3",
                             AccessFailedCount = 0,
                             Age = 32,
-                            ConcurrencyStamp = "4de55e3a-6177-445c-b29d-e694079354ee",
+                            ConcurrencyStamp = "191fd5e7-d0a1-4719-a585-38f34c5999c7",
                             Email = "user3@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@EXAMPLE.COM",
                             NormalizedUserName = "USER3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFdqmWslMdYtpTH9FC8HJmPilexJ7bG9vzq1Rp96BcclPKOHiJK1G9/tl0JooAaKCA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGDxEByIn3n6QNfo7vekZd/bRpHCscBYzrzGPIuPpTgPXAxfA748Bcs4B3AKtQSntA==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ad39dfbc-2ae6-44fc-97e7-a3f1de4ad6e7",
+                            SecurityStamp = "82a4674b-ee2a-4d65-b164-f3ae931e475d",
                             TwoFactorEnabled = false,
                             UserName = "user3@example.com"
                         });
@@ -602,37 +605,6 @@ namespace EZ_Wheels.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("customerRentCars");
-                });
-
-            modelBuilder.Entity("Car_Rental_APIs.Models.purchase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ExecutedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PayerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("purchases");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

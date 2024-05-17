@@ -21,7 +21,6 @@ namespace Car_Rental_APIs.Controllers
         [HttpGet("{pageNumber},{pageSize}")]
         public IActionResult getAll(int pageNumber=1, int pageSize=100)
         {
-
             var data = _unitOfWork.CustomerRentCarRepo.getAll(pageNumber, pageSize).ToList();
             List<CustomerRentCarDTO> customerRentCarDTOList = new List<CustomerRentCarDTO>();
             foreach (var item in data)
@@ -81,6 +80,7 @@ namespace Car_Rental_APIs.Controllers
 
         private CustomerRentCarDTO getCarRentDTO(CustomerRentCar c) {
             CustomerRentCarDTO dto = new CustomerRentCarDTO();
+            dto.CustomerId = c.Customer.Id;
             dto.ReservationNumber = c.ReservationNumber;
             dto.StartingDate = c.StartingDate;
             dto.EndingDate = c.EndingDate;
