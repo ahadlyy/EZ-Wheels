@@ -4,7 +4,6 @@ namespace Car_Rental_APIs.DTOs
 {
     public class CustomerRentCarDTO
     {
-        [Required]
         public string ReservationNumber { get; set; }
         [Required]
         public DateTime StartingDate { get; set; }
