@@ -1,5 +1,6 @@
 ﻿using Car_Rental_APIs.DTOs;
 using Car_Rental_APIs.Models;
+using EZ_Wheels.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,8 @@ namespace Car_Rental_APIs.Controllers
             newUser.NormalizedUserName = userDto.UserName.ToUpper();
             newUser.Email = userDto.Email;
             newUser.NormalizedEmail = userDto.Email.ToUpper();
+            newUser.Age = userDto.Age;
+            newUser.PhoneNumber = userDto.PhoneNumber;
 
             var role = await _roleManager.FindByNameAsync("Client");
 
@@ -99,12 +102,21 @@ namespace Car_Rental_APIs.Controllers
                         signingCredentials: signincred
                         );
 
+            UserDTO returnedUser = new UserDTO
+            {
+                Id = fetchedUser.Id,
+                Email = fetchedUser.Email,
+                PhoneNumber = fetchedUser.PhoneNumber,
+                UserName = fetchedUser.UserName,
+                Age = fetchedUser.Age,
+            };
+
             return Ok(
                 new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(mytoken),
                     expiration = mytoken.ValidTo,
-                    user = fetchedUser
+                    user = returnedUser
                 });
         }
     }
