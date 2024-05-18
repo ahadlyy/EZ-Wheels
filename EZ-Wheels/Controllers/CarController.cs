@@ -176,7 +176,7 @@ namespace Car_Rental_APIs.Controllers
                     throw;
                 }
             }
-            return Created("",newCar);
+            return Created();
         }
 
         [HttpPut("{plateNumber}")]
@@ -247,7 +247,8 @@ namespace Car_Rental_APIs.Controllers
                 }
             }
 
-            return Ok(existingCar);
+
+            return Ok();
         }
 
         [HttpDelete("{plateNumber}")]
@@ -311,8 +312,11 @@ namespace Car_Rental_APIs.Controllers
                         throw;
                     }
                 }
-
-                return Ok(existingCar);
+                var res = new CarDataDTO()
+                {
+                    PhotoUrl = existingCar.PhotoUrl,
+                };
+                return Ok(res);
             }
             return BadRequest();
         }
