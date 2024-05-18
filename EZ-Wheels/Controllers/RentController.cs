@@ -52,9 +52,8 @@ namespace Car_Rental_APIs.Controllers
         async public Task<IActionResult> Add(CustomerRentCarDTO dto)
         {
             var res = await getCustomerRentCarModel(dto);
-            if(res == null) return BadRequest();
+            if (res == null) return BadRequest();
             res.ReservationNumber = DateTime.Now.ToString("HHmmssddMMyyyy") + res.Customer.Id;
-
             _unitOfWork.CustomerRentCarRepo.Add(res);
             _unitOfWork.saveChanges();
             return Created();
@@ -127,6 +126,7 @@ namespace Car_Rental_APIs.Controllers
             {
                 rent.CustomerCar = car;
             }
+
             return rent;
         }
     }
