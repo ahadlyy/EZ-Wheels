@@ -76,7 +76,7 @@ namespace EZ_Wheels.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, role.Name);
-                return Ok("Account added successfully");
+                return Ok();
             }
 
             var errorMessages = new List<string>();
