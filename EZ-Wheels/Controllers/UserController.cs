@@ -30,12 +30,7 @@ namespace EZ_Wheels.Controllers
             List<UserDTO> fetchedUsers = [];
             foreach (var user in fetchedUsersRaw)
             {
-                fetchedUsers.Add(new UserDTO
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email
-                });
+                fetchedUsers.Add(prepareUserDTO(user));
             }
             return Ok(fetchedUsers);
         }
@@ -107,7 +102,7 @@ namespace EZ_Wheels.Controllers
             fetchedUser.NormalizedEmail = userToUpdate.Email.ToUpper();
             fetchedUser.UserName = userToUpdate.UserName;
             fetchedUser.NormalizedUserName = userToUpdate.UserName.ToUpper();
-            fetchedUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(fetchedUser, userToUpdate.Password);
+            //fetchedUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(fetchedUser, userToUpdate.Password);
             fetchedUser.Age = userToUpdate.Age;
             fetchedUser.PhoneNumber = userToUpdate.PhoneNumber;
 
@@ -119,6 +114,21 @@ namespace EZ_Wheels.Controllers
             }
             else
                 return BadRequest(updateResult);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> updatePassword(PasswordDTO updatedPassword)
+        {
+            var updatedUser = await _userManager.FindByIdAsync(updatedPassword.Id);
+            bool isPasswordCorrect = await _userManager.CheckPasswordAsync(updatedUser, updatedPassword.OldPassword);
+            if(isPasswordCorrect)
+            {
+                updatedUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(updatedUser, updatedPassword.NewPassword);
+                var updateResult = await _userManager.UpdateAsync(updatedUser);
+                if (updateResult.Succeeded)
+                    return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]

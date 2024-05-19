@@ -4,6 +4,7 @@ using Car_Rental_APIs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EZ_Wheels.Migrations
 {
     [DbContext(typeof(RentalDbContext))]
-    partial class RentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517123125_seeding all cars")]
+    partial class seedingallcars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -98,16 +101,16 @@ namespace EZ_Wheels.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             Age = 28,
-                            ConcurrencyStamp = "5d9f8569-91af-4f4a-9d0b-ecd460907892",
+                            ConcurrencyStamp = "dff04722-6e44-40fc-8389-a2eb672365b1",
                             Email = "user1@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC+mmTb4MYXImNF2Y5CdcIJbqJZszjLt0GZGOjSK2mkCZ3QBIPa5eaI6VpnoIL2kbg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB7+O5VTwCm6Tf+RouD4bG7DPB8IMf/oqKk/XfptDTeFsRrfW7TwdLtHHyLKr5PMfg==",
                             PhoneNumber = "01100200300",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e308a270-3995-425a-97e7-2c931f97745b",
+                            SecurityStamp = "1584503b-8603-4094-b97e-473fb41c2897",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -116,16 +119,16 @@ namespace EZ_Wheels.Migrations
                             Id = "2",
                             AccessFailedCount = 0,
                             Age = 30,
-                            ConcurrencyStamp = "33332cdc-fed2-4f93-bd00-2840377d2539",
+                            ConcurrencyStamp = "338c52dd-50e5-451f-bb89-1b7853900929",
                             Email = "user2@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECyQ43AwiYOxdDL30y50sW70fupHqKfwDfMCqLOIV4oSNkqxCZFTy2nMyvYwUM3w0A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPu9JK5HOkaNzSFAqyOqCroD+94di1I4A8XXkuhf0T+9Fp03Lyzcn1RCOVZ9bPc21w==",
                             PhoneNumber = "01020304050",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e13cebf8-c6e0-4e48-a6bc-f43e4f8b9356",
+                            SecurityStamp = "4cc69e73-3591-406f-a504-8b639737dcff",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -134,16 +137,16 @@ namespace EZ_Wheels.Migrations
                             Id = "3",
                             AccessFailedCount = 0,
                             Age = 32,
-                            ConcurrencyStamp = "4de55e3a-6177-445c-b29d-e694079354ee",
+                            ConcurrencyStamp = "191fd5e7-d0a1-4719-a585-38f34c5999c7",
                             Email = "user3@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@EXAMPLE.COM",
                             NormalizedUserName = "USER3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFdqmWslMdYtpTH9FC8HJmPilexJ7bG9vzq1Rp96BcclPKOHiJK1G9/tl0JooAaKCA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGDxEByIn3n6QNfo7vekZd/bRpHCscBYzrzGPIuPpTgPXAxfA748Bcs4B3AKtQSntA==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ad39dfbc-2ae6-44fc-97e7-a3f1de4ad6e7",
+                            SecurityStamp = "82a4674b-ee2a-4d65-b164-f3ae931e475d",
                             TwoFactorEnabled = false,
                             UserName = "user3@example.com"
                         });
@@ -197,24 +200,9 @@ namespace EZ_Wheels.Migrations
 
                     b.HasKey("PlateNumber");
 
-                    b.ToTable("Cars", (string)null);
+                    b.ToTable("Cars");
 
                     b.HasData(
-                        new
-                        {
-                            PlateNumber = "ABC123",
-                            ChassisNumber = "CHS123",
-                            Color = "Red",
-                            Make = "Toyota",
-                            Mileage = 10000,
-                            Model = "Camry",
-                            NumberOfPassengers = 4,
-                            RentalPrice = 100,
-                            State = 0,
-                            Transmission = 1,
-                            Type = 1,
-                            Variant = "LE"
-                        },
                         new
                         {
                             PlateNumber = "BBB001",
@@ -224,7 +212,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 1500,
                             Model = "X7",
                             NumberOfPassengers = 7,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//bmw-m3-4d-black-2022.png",
+                            PhotoUrl = "https://localhost:7108/uploads/bmw-m3-4d-black-2022.png",
                             RentalPrice = 2500,
                             State = 0,
                             Transmission = 1,
@@ -240,7 +228,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 20000,
                             Model = "Wrangler",
                             NumberOfPassengers = 4,
-                            PhotoUrl = "EZ-Wheel//wwwroot//uploads//jeep-grand-cherokee-5d-weiss-2018.png",
+                            PhotoUrl = "https://localhost:7108/uploads/jeep-grand-cherokee-5d-weiss-2018.png",
                             RentalPrice = 3000,
                             State = 2,
                             Transmission = 1,
@@ -256,7 +244,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 5000,
                             Model = "Santa Cruz",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//hyundai-kona-suv-black-2024.png",
+                            PhotoUrl = "https://localhost:7108/uploads/hyundai-kona-suv-black-2024.png",
                             RentalPrice = 2200,
                             State = 0,
                             Transmission = 1,
@@ -272,7 +260,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 10000,
                             Model = "Suburban",
                             NumberOfPassengers = 8,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//chevrolet-trailblazer-suv-black-2021.png",
+                            PhotoUrl = "https://localhost:7108/uploads/chevrolet-trailblazer-suv-black-2021.png",
                             RentalPrice = 3500,
                             State = 1,
                             Transmission = 1,
@@ -288,7 +276,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 8000,
                             Model = "5 Series",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//bmw-x5-40i-4d-suv-white-2021.png",
+                            PhotoUrl = "https://localhost:7108/uploads/bmw-x5-40i-4d-suv-white-2021.png",
                             RentalPrice = 2800,
                             State = 0,
                             Transmission = 1,
@@ -304,7 +292,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 12000,
                             Model = "Cherokee",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//jeep-wrangler-5d-braun-2018.png",
+                            PhotoUrl = "https://localhost:7108/uploads/jeep-wrangler-5d-braun-2018.png",
                             RentalPrice = 3200,
                             State = 0,
                             Transmission = 1,
@@ -320,7 +308,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 15000,
                             Model = "Blazer",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//chevrolet-tahoe-suv-white-US-2021.png",
+                            PhotoUrl = "https://localhost:7108/uploads/chevrolet-tahoe-suv-white-US-2021.png",
                             RentalPrice = 2500,
                             State = 0,
                             Transmission = 1,
@@ -336,7 +324,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 4000,
                             Model = "X6",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//bmw-m8-competition-convertible-2d-blue-2019-JV.png",
+                            PhotoUrl = "https://localhost:7108/uploads/bmw-m8-competition-convertible-2d-blue-2019-JV.png",
                             RentalPrice = 3000,
                             State = 0,
                             Transmission = 1,
@@ -352,7 +340,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 7000,
                             Model = "Traverse",
                             NumberOfPassengers = 7,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//chevrolet-blazer-suv-white-2023.png",
+                            PhotoUrl = "https://localhost:7108/uploads/chevrolet-blazer-suv-white-2023.png",
                             RentalPrice = 2400,
                             State = 0,
                             Transmission = 1,
@@ -368,7 +356,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 10000,
                             Model = "X1",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//bmw-x5m-suv-4d-black-2023-JV.png",
+                            PhotoUrl = "https://localhost:7108/uploads/bmw-x5m-suv-4d-black-2023-JV.png",
                             RentalPrice = 2800,
                             State = 0,
                             Transmission = 1,
@@ -384,7 +372,7 @@ namespace EZ_Wheels.Migrations
                             Mileage = 15000,
                             Model = "7 Series",
                             NumberOfPassengers = 5,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//bmw-x3m-suv-blue-2023.png",
+                            PhotoUrl = "https://localhost:7108/uploads/bmw-x3m-suv-blue-2023.png",
                             RentalPrice = 2900,
                             State = 1,
                             Transmission = 1,
@@ -400,12 +388,172 @@ namespace EZ_Wheels.Migrations
                             Mileage = 12000,
                             Model = "Spark",
                             NumberOfPassengers = 4,
-                            PhotoUrl = "EZ-Wheels//wwwroot//uploads//bmw-7-4d-silver-2021.png",
+                            PhotoUrl = "https://localhost:7108/uploads/bmw-7-4d-silver-2021.png",
                             RentalPrice = 2300,
                             State = 0,
                             Transmission = 1,
                             Type = 2,
                             Variant = "LS"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB021",
+                            ChassisNumber = "CHS041",
+                            Color = "Orange",
+                            Make = "Nissan",
+                            Mileage = 9000,
+                            Model = "Camry",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/nissan-sentra-4d-orange-2020.png",
+                            RentalPrice = 2700,
+                            State = 0,
+                            Transmission = 1,
+                            Type = 1,
+                            Variant = "SE"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB022",
+                            ChassisNumber = "CHS042",
+                            Color = "White",
+                            Make = "Audi",
+                            Mileage = 10000,
+                            Model = "Civic",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/audi-a6-quattro-4d-white-2021.png",
+                            RentalPrice = 2800,
+                            State = 2,
+                            Transmission = 1,
+                            Type = 1,
+                            Variant = "Touring"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB023",
+                            ChassisNumber = "CHS043",
+                            Color = "Red",
+                            Make = "Ford",
+                            Mileage = 8000,
+                            Model = "Mustang",
+                            NumberOfPassengers = 4,
+                            PhotoUrl = "https://localhost:7108/uploads/ford-mustang-cabrio-2d-rot-geschl-2016.png",
+                            RentalPrice = 2500,
+                            State = 0,
+                            Transmission = 0,
+                            Type = 5,
+                            Variant = "GT"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB024",
+                            ChassisNumber = "CHS044",
+                            Color = "Brown",
+                            Make = "Nissan",
+                            Mileage = 15000,
+                            Model = "Altima",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/nissan-sunny-4d-braun-2011.png",
+                            RentalPrice = 2600,
+                            State = 1,
+                            Transmission = 1,
+                            Type = 1,
+                            Variant = "SL"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB025",
+                            ChassisNumber = "CHS045",
+                            Color = "Gray",
+                            Make = "Nissan-versa",
+                            Mileage = 7000,
+                            Model = "Sorento",
+                            NumberOfPassengers = 7,
+                            PhotoUrl = "https://localhost:7108/uploads/nissan-versa-4d-grey-2023.png",
+                            RentalPrice = 2900,
+                            State = 0,
+                            Transmission = 1,
+                            Type = 0,
+                            Variant = "SX"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB026",
+                            ChassisNumber = "CHS046",
+                            Color = "Blue",
+                            Make = "Subaru",
+                            Mileage = 6000,
+                            Model = "Outback",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/subaru-xv-5d-blau-2019.png",
+                            RentalPrice = 2800,
+                            State = 0,
+                            Transmission = 1,
+                            Type = 3,
+                            Variant = "Limited"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB027",
+                            ChassisNumber = "CHS047",
+                            Color = "Grey",
+                            Make = "Audi",
+                            Mileage = 9000,
+                            Model = "CX-5",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/audi-a3-4d-grey-2021.png",
+                            RentalPrice = 2700,
+                            State = 2,
+                            Transmission = 1,
+                            Type = 0,
+                            Variant = "Grand Touring"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB028",
+                            ChassisNumber = "CHS048",
+                            Color = "Silver",
+                            Make = "Skoda-octavia",
+                            Mileage = 8000,
+                            Model = "Passat",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/skoda-octavia-4d-silber-2020.png",
+                            RentalPrice = 2600,
+                            State = 0,
+                            Transmission = 1,
+                            Type = 1,
+                            Variant = "R-Line"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB029",
+                            ChassisNumber = "CHS049",
+                            Color = "Blue",
+                            Make = "Audi",
+                            Mileage = 7000,
+                            Model = "Q5",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/audi-a4-avant-stw-4d-blue-2023-JV.png",
+                            RentalPrice = 3500,
+                            State = 2,
+                            Transmission = 1,
+                            Type = 0,
+                            Variant = "Premium Plus"
+                        },
+                        new
+                        {
+                            PlateNumber = "BBB030",
+                            ChassisNumber = "CHS050",
+                            Color = "Grey",
+                            Make = "Peugeot",
+                            Mileage = 5000,
+                            Model = "C-Class",
+                            NumberOfPassengers = 5,
+                            PhotoUrl = "https://localhost:7108/uploads/peugeot-208-hatch-4d-grey-2020-JV.png",
+                            RentalPrice = 4000,
+                            State = 0,
+                            Transmission = 1,
+                            Type = 1,
+                            Variant = "C300"
                         });
                 });
 
@@ -456,38 +604,7 @@ namespace EZ_Wheels.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("customerRentCars", (string)null);
-                });
-
-            modelBuilder.Entity("Car_Rental_APIs.Models.purchase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ExecutedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PayerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("purchases", (string)null);
+                    b.ToTable("customerRentCars");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

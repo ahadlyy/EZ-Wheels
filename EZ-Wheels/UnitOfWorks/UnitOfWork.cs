@@ -8,6 +8,7 @@ namespace Car_Rental_APIs.UnitOfWorks
         public RentalDbContext _db;
         //GenericRepo<Car> carRepo;
         GenericRepo<CustomerRentCar> customerRentCarRepo;
+        GenericRepo<purchase> paymentRepo;
         CarRepo carRepo;
 
         public UnitOfWork(RentalDbContext db)
@@ -54,9 +55,26 @@ namespace Car_Rental_APIs.UnitOfWorks
 
         }
 
+        public GenericRepo<purchase> PaymentRepo
+        {
+            get
+            {
+                if (paymentRepo == null)
+                {
+                    paymentRepo = new GenericRepo<purchase>(_db);
+                }
+                return paymentRepo;
+            }
+        }
+
         public void saveChanges()
         {
             _db.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _db.SaveChangesAsync();
         }
 
     }

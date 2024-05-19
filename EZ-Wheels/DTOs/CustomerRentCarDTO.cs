@@ -23,8 +23,8 @@ namespace Car_Rental_APIs.DTOs
         public int numberofRentDays { get; set; }
 
 
-        public string? CustomerName { get; set; }
-        public string? CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerId { get; set; }
      
         public string? PlateNumber { get; set; }
         public string? Make { get; set; }

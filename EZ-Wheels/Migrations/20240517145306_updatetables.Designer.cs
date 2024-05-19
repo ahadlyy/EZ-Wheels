@@ -4,6 +4,7 @@ using Car_Rental_APIs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EZ_Wheels.Migrations
 {
     [DbContext(typeof(RentalDbContext))]
-    partial class RentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517145306_updatetables")]
+    partial class updatetables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +200,7 @@ namespace EZ_Wheels.Migrations
 
                     b.HasKey("PlateNumber");
 
-                    b.ToTable("Cars", (string)null);
+                    b.ToTable("Cars");
 
                     b.HasData(
                         new
@@ -456,7 +459,7 @@ namespace EZ_Wheels.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("customerRentCars", (string)null);
+                    b.ToTable("customerRentCars");
                 });
 
             modelBuilder.Entity("Car_Rental_APIs.Models.purchase", b =>
@@ -487,7 +490,7 @@ namespace EZ_Wheels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("purchases", (string)null);
+                    b.ToTable("purchases");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

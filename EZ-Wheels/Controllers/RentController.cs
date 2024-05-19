@@ -21,7 +21,6 @@ namespace Car_Rental_APIs.Controllers
         [HttpGet("{pageNumber},{pageSize}")]
         public IActionResult getAll(int pageNumber=1, int pageSize=100)
         {
-
             var data = _unitOfWork.CustomerRentCarRepo.getAll(pageNumber, pageSize).ToList();
             List<CustomerRentCarDTO> customerRentCarDTOList = new List<CustomerRentCarDTO>();
             foreach (var item in data)
@@ -53,9 +52,8 @@ namespace Car_Rental_APIs.Controllers
         async public Task<IActionResult> Add(CustomerRentCarDTO dto)
         {
             var res = await getCustomerRentCarModel(dto);
-            if(res == null) return BadRequest();
+            if (res == null) return BadRequest();
             res.ReservationNumber = DateTime.Now.ToString("HHmmssddMMyyyy") + res.Customer.Id;
-
             _unitOfWork.CustomerRentCarRepo.Add(res);
             _unitOfWork.saveChanges();
             return Created();
@@ -81,6 +79,7 @@ namespace Car_Rental_APIs.Controllers
 
         private CustomerRentCarDTO getCarRentDTO(CustomerRentCar c) {
             CustomerRentCarDTO dto = new CustomerRentCarDTO();
+            dto.CustomerId = c.Customer.Id;
             dto.ReservationNumber = c.ReservationNumber;
             dto.StartingDate = c.StartingDate;
             dto.EndingDate = c.EndingDate;
@@ -127,6 +126,7 @@ namespace Car_Rental_APIs.Controllers
             {
                 rent.CustomerCar = car;
             }
+
             return rent;
         }
     }

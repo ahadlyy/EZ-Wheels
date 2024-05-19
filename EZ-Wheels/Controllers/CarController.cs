@@ -176,7 +176,7 @@ namespace Car_Rental_APIs.Controllers
                     throw;
                 }
             }
-            return Created("",newCar);
+            return Created();
         }
 
         [HttpPut("{plateNumber}")]
@@ -223,34 +223,10 @@ namespace Car_Rental_APIs.Controllers
             if (car.Model != null) existingCar.Model = car.Model;
             if (car.Mileage != null) existingCar.Mileage = car.Mileage.Value;
             if (car.NumberOfPassengers != null) existingCar.NumberOfPassengers = car.NumberOfPassengers.Value;
+            if (car.Variant != null) existingCar.Variant = car.Variant;
+            if (car.PlateNumber != null) existingCar.PlateNumber = car.PlateNumber;
 
-            // Check if a new photo is provided
-            //if (car.Photo != null && car.Photo.Length > 0)
-            //{
-            //    // Save the uploaded photo to the server
-            //    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-            //    string uniqueFileName = Guid.NewGuid().ToString() + "_" + car.Photo.FileName;
-            //    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            //    using (var stream = new FileStream(filePath, FileMode.Create))
-            //    {
-            //        await car.Photo.CopyToAsync(stream);
-            //    }
-
-            //    var oldPhotoUrl = _unitOfWork.CarRepo.getByStringId(plateNumber)?.PhotoUrl;
-            //    if (oldPhotoUrl != null)
-            //    {
-            //        string oldFilePath = Path.Combine(_hostingEnvironment.WebRootPath, oldPhotoUrl.TrimStart('/'));
-            //        if (System.IO.File.Exists(oldFilePath))
-            //        {
-            //            System.IO.File.Delete(oldFilePath);
-            //        }
-            //    }
-            //    // Delete the old photo if it exists
-                
-            //    // Update the photo URL in the DTO
-            //    existingCar.PhotoUrl = "https://localhost:7108/uploads/" + uniqueFileName;
-            //}
+       
 
 
             _unitOfWork.CarRepo.update(existingCar);
@@ -271,7 +247,8 @@ namespace Car_Rental_APIs.Controllers
                 }
             }
 
-            return NoContent();
+
+            return Ok();
         }
 
         [HttpDelete("{plateNumber}")]
@@ -335,8 +312,11 @@ namespace Car_Rental_APIs.Controllers
                         throw;
                     }
                 }
-
-                return Ok();
+                var res = new CarDataDTO()
+                {
+                    PhotoUrl = existingCar.PhotoUrl,
+                };
+                return Ok(res);
             }
             return BadRequest();
         }
