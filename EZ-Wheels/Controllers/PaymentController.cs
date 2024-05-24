@@ -20,6 +20,11 @@ namespace Car_Rental_APIs.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Creates a PayPal payment.
+        /// </summary>
+        /// <param name="request">The payment creation request containing amount and currency.</param>
+        /// <returns>The payment ID and approval URL.</returns>
         [HttpPost("create-payment")]
         public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
         {
@@ -28,6 +33,12 @@ namespace Car_Rental_APIs.Controllers
             return Ok(new { id = payment.id, approvalUrl });
         }
 
+
+        /// <summary>
+        /// Executes a PayPal payment.
+        /// </summary>
+        /// <param name="request">The payment execution request containing payment ID and payer ID.</param>
+        /// <returns>The executed payment details.</returns>
         [HttpPost("execute-payment")]
         public async Task<IActionResult> ExecutePayment([FromBody] ExecutePaymentRequest request)
         {
