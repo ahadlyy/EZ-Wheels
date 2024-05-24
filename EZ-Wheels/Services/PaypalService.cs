@@ -39,8 +39,8 @@ namespace Car_Rental_APIs.Services
                 },
                 redirect_urls = new RedirectUrls
                 {
-                    return_url = "http://your-url.com/return", // Replace with your actual return URL
-                    cancel_url = "http://your-url.com/cancel" // Replace with your actual cancel URL
+                    return_url = "http://your-url.com/return", 
+                    cancel_url = "http://your-url.com/cancel" 
                 }
             };
 
@@ -66,7 +66,7 @@ namespace Car_Rental_APIs.Services
             var paymentExecution = new PaymentExecution { payer_id = payerId };
             var payment = new PayPal.Api.Payment { id = paymentId };
             var executedPayment = await Task.Run(() => payment.Execute(_apiContext, paymentExecution));
-
+          
             var existingPayment = _unitOfWork.PaymentRepo.getByStringId(paymentId);
             if (existingPayment != null)
             {

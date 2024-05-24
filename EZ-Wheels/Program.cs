@@ -109,10 +109,10 @@ namespace Car_Rental_APIs
             {
                 { "mode", configuration["paypal:mode"] },
                 { "clientid", configuration["paypal:clientid"] },
-                { "clientsecret", configuration["paypal:clientsecret"] },
-                { "url", configuration["paypal:url"] },
-                { "connectiontimeout", configuration["paypal:connectiontimeout"] },
-                { "requestretries", configuration["paypal:requestretries"] }
+                { "clientsecret", configuration["paypal:clientsecret"] }
+                //{ "url", configuration["paypal:url"] },
+                //{ "connectiontimeout", configuration["paypal:connectiontimeout"] },
+                //{ "requestretries", configuration["paypal:requestretries"] }
             };
 
             var accesstoken = new PayPal.Api.OAuthTokenCredential(clientid, clientsecret, config).GetAccessToken();

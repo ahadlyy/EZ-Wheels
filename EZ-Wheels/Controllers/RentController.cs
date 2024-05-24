@@ -1,6 +1,7 @@
 ﻿using Car_Rental_APIs.DTOs;
 using Car_Rental_APIs.Models;
 using Car_Rental_APIs.UnitOfWorks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Car_Rental_APIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RentController : ControllerBase
     {
         private UnitOfWork _unitOfWork;
