@@ -1,4 +1,5 @@
 ﻿using Car_Rental_APIs.Models;
+using Car_Rental_APIs.UnitOfWorks;
 
 namespace Car_Rental_APIs.GenericRepo
 {
@@ -36,8 +37,10 @@ namespace Car_Rental_APIs.GenericRepo
             var query = filteredQuery;
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            if (totalPages < pageNumber)
-                throw new Exception("page number out of bound");
+            if (totalCount == 0 || totalPages < pageNumber)
+                return query;
+            //if (totalPages < pageNumber)
+            //    throw new Exception("page number out of bound");
             else
             {
                 query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
@@ -71,6 +74,20 @@ namespace Car_Rental_APIs.GenericRepo
         public void save()
         {
             _db.SaveChanges();
+        }
+
+        public async Task Add(PayPal.Api.Payment newPayment)
+        {
+            var payment = new purchase
+            {
+                PaymentId = newPayment.id,
+                Amount = Convert.ToSingle(newPayment.transactions[0].amount.total),
+                Currency = newPayment.transactions[0].amount.currency,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            _db.Add(payment);
+            await _db.SaveChangesAsync();
         }
     }
 }
