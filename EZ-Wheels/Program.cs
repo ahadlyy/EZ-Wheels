@@ -1,4 +1,3 @@
-
 using Car_Rental_APIs.Models;
 using Car_Rental_APIs.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +24,8 @@ namespace Car_Rental_APIs
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddHttpClient(); // added
 
             builder.Services.AddDbContext<RentalDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("CarRentalConnection")));
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<RentalDbContext>();

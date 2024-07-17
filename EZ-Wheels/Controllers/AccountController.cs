@@ -5,12 +5,25 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace Car_Rental_APIs.Controllers
 {
+
+    public class ApiResponseDto
+    {
+        public DataDto Data { get; set; }
+    }
+
+    public class DataDto
+    {
+        public string Auth_token { get; set; }
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -19,17 +32,24 @@ namespace Car_Rental_APIs.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
 
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config)
+        /* Start of : variables to integrate qwith auth gate */
+        private readonly HttpClient _httpClient;
+        private readonly string apiUrl = "http://localhost:3000/auth/authcode";
+        /* End of : variables to integrate with auth gate */
+
+
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config, HttpClient httpClient)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _config = config;
+            _httpClient = httpClient;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Registration(RegisterUserDto userDto)
         {
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             ApplicationUser newUser = new ApplicationUser();
@@ -74,13 +94,15 @@ namespace Car_Rental_APIs.Controllers
 
             bool isPasswordCorrect = await _userManager.CheckPasswordAsync(fetchedUser, userDto.Password);
             if (!isPasswordCorrect)
-                return Unauthorized(new { message="Incorrect password" });
+                return Unauthorized(new { message = "Incorrect password" });
 
             ///claims token
-            var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Name, fetchedUser.UserName));
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, fetchedUser.Id));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, fetchedUser.UserName),
+                new(ClaimTypes.NameIdentifier, fetchedUser.Id),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
             //role
             var roles = await _userManager.GetRolesAsync(fetchedUser);
@@ -120,5 +142,145 @@ namespace Car_Rental_APIs.Controllers
                     user = returnedUser
                 });
         }
+
+
+        /* ---------------------- Auth gate integration Section ---------------------- */
+        [HttpPost("codeWithToken")]
+        public async Task<IActionResult> ExchangeCodeWithToken(AuthCodeDto authCodeDto)
+        {
+            var data = new
+            {
+                authCode = authCodeDto.AuthCode
+            };
+
+            var jsonData = JsonConvert.SerializeObject(data);
+
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync(apiUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponseDto>(jsonResponse);
+
+                if (apiResponse != null && apiResponse.Data != null)
+                {
+                    string token = apiResponse.Data.Auth_token;
+                    var handler = new JwtSecurityTokenHandler();
+                    var jwtSecurityToken = handler.ReadJwtToken(token);
+                    AuthgateUserDto authgateUser = ExtractUserInfoFromToken(jwtSecurityToken);
+                    bool isExistingUser = await IsExistingUser(authgateUser);
+                    
+                    if (!isExistingUser)
+                        await RegisterAuthgateUser(authgateUser);
+
+                    JwtDto returnedJwtDto = await LoginAuthgateUser(authgateUser);
+
+                    return Ok(returnedJwtDto);
+                }
+                else
+                {
+                    return BadRequest("Invalid response format");
+                }
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode, response.ReasonPhrase);
+            }
+        }
+
+        private AuthgateUserDto ExtractUserInfoFromToken(JwtSecurityToken token)
+        {
+            AuthgateUserDto authgateUser = new()
+            {
+                Email = token.Claims.First(claim => claim.Type == "email").Value,
+                UserName = token.Claims.First(claim => claim.Type == "name").Value,
+                PhoneNumber = token.Claims.First(claim => claim.Type == "phone").Value,
+                Image = token.Claims.First(claim => claim.Type == "image").Value,
+                Age = token.Claims.First(claim => claim.Type == "age").Value,
+            };
+
+            return authgateUser;
+        }
+
+        private async Task<bool> RegisterAuthgateUser(AuthgateUserDto authgateUser)
+        {
+            ApplicationUser newUser = new();
+            var lastUserId = await _userManager.Users.OrderByDescending(u => u.Id)
+                                                         .Select(u => u.Id)
+                                                         .FirstOrDefaultAsync();
+            lastUserId ??= "0";
+
+            newUser.Id = (int.Parse(lastUserId) + 1).ToString();
+            newUser.UserName = authgateUser.UserName;
+            newUser.NormalizedUserName = authgateUser.UserName.ToUpper();
+            newUser.Email = authgateUser.Email;
+            newUser.NormalizedEmail = authgateUser.Email.ToUpper();
+            newUser.Age = int.Parse(authgateUser.Age);
+            newUser.PhoneNumber = authgateUser.PhoneNumber;
+
+            // var role = await _roleManager.FindByNameAsync("Client");
+
+            IdentityResult result = await _userManager.CreateAsync(newUser, "Password123!");
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, "Client");
+                return true;
+            }
+            return false;
+        }
+
+        private async Task<JwtDto> LoginAuthgateUser(AuthgateUserDto authgateUse)
+        {
+            ApplicationUser fetchedUser = await _userManager.FindByEmailAsync(authgateUse.Email);
+
+            var claims = new List<Claim>();
+
+            var roles = await _userManager.GetRolesAsync(fetchedUser);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, fetchedUser.Id));
+                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("id", fetchedUser.Id));
+                claims.Add(new Claim("role", role));
+                claims.Add(new Claim("email", fetchedUser.Email));
+                claims.Add(new Claim("userName", fetchedUser.Id));
+                claims.Add(new Claim("age", fetchedUser.Id));
+                claims.Add(new Claim("phoneNumber", fetchedUser.Id));
+                
+            }
+
+            SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
+
+            SigningCredentials signincred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            JwtSecurityToken mytoken =
+                new JwtSecurityToken(
+                        // issuer: _config["JWT:ValidIssuer"],  //url web api 
+                        // audience: _config["JWT:ValidAudiance"], //url consumer angular
+                        claims: claims,
+                        expires: DateTime.Now.AddHours(5),
+                        signingCredentials: signincred
+                        );
+
+            JwtDto returnedJwtDto = new()
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(mytoken),
+            };
+
+            return returnedJwtDto;
+        }
+
+        private async Task<bool> IsExistingUser(AuthgateUserDto authgateUser)
+        {
+            ApplicationUser fetchedUser = await _userManager.FindByEmailAsync(authgateUser.Email);
+            if (fetchedUser == null)
+                return false;
+            else
+                return true;
+        }
+
+        /* ------------------------------------------------------------------------------------ */
     }
 }
